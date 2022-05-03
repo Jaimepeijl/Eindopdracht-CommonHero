@@ -2,22 +2,21 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <>
+      <nav>
+          <ul>
+              <li><a href="/">Hulp Zoeken</a></li>
+              <li><a href="/">Aanbieden</a></li>
+              <li><a href="/">Inloggen</a></li>
+          </ul>
+      </nav>
+      <header>
+          <h1>Welkom bij Common Hero</h1>
+          <button type="button">
+              Aanmelden
+          </button>
       </header>
-    </div>
+      </>
   );
 }
 
