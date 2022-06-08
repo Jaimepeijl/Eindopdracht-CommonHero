@@ -1,15 +1,10 @@
 import React from "react";
-import NavBar from "./NavBar";
 
-function Header (){
+function Header ({children}){
     return(
-    <header>
-        <NavBar/>
-        <h1>Welkom bij Common Hero</h1>
-        <button type="button">
-            Aanmelden
-        </button>
-    </header>
+    <Header>
+        {children}
+    </Header>
     )
 }
 export default Header

@@ -1,13 +1,17 @@
 import React from 'react'
 import './Vacatures.css'
+import Header from "../components/Header";
 
 function HulpZoeken({title, username, summary}) {
     return(
-        <article className="HulpZoeken">
-            <h2>{title}</h2>
-            <h3>{username}</h3>
-            <p>{summary}</p>
-        </article>
+        <>
+            <Header/>
+            <article className="HulpVragen">
+                <h2>{title}</h2>
+                <h3>{username}</h3>
+                <p>{summary}</p>
+            </article>
+        </>
     )
 }
 export default HulpZoeken;
