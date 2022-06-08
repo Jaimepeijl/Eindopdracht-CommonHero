@@ -1,5 +1,5 @@
 import React from 'react'
-import '../components/Vacatures.css'
+import './Vacatures.css'
 
 function HulpVragen({title, username, summary}) {
     return(
