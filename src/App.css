@@ -7,6 +7,9 @@
     box-sizing: border-box;
 }
 /*2.Typography----------*/
+h3{
+    color: #D84B1E;
+}
 /*3.Layout--------------*/
 /*4.Areas---------------*/
 header {
@@ -17,7 +20,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('./assets/sweet-ice-cream-photography-250621-unsplash.jpg') no-repeat center center fixed;
+    background: url('./assets/clark-tibbs-oqStl2L5oxI-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
 }
@@ -39,41 +42,23 @@ header button:hover {
     cursor: pointer;
 }
 
-header h1 {
+header h1, h1 {
     font-size: 72px;
     padding: 48px 0;
     color: #D84B1E;
-    text-shadow: 1px 1px 10px black;
+    text-shadow: 1px 1px 10px #888888;
 }
-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 120px;
-    padding: 0 48px;
-    z-index: 1;
 
+body{
+    text-align: center;
+}
+#vacatures{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: space-evenly;
 }
-
-nav ul {
-    list-style: none;
+#vacatures ul{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 250px;
-}
-
-nav a,
-nav a:visited {
-    color: white;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
+    flex-direction: column;
+    flex-basis: 500px;
 }
