@@ -19,13 +19,21 @@ header {
     height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     background: url('./assets/tim-mossholder-9ulzDarOwEI-unsplash.jpg') no-repeat center center fixed;
     background-size: cover;
     color: white;
     gap: 30px;
 }
+.welcome{
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
 header button {
     background-color: white;
     font-weight: 600;
@@ -47,7 +55,7 @@ header button:hover {
 header h1, h1 {
     font-size: 36px;
     color: #D84B1E;
-    text-shadow: 1px 1px 10px #888888;
+    /*text-shadow: 1px 1px 10px #888888;*/
 }
 .HeaderLogo img{
     max-width: 700px;
@@ -56,16 +64,29 @@ header h1, h1 {
 body{
     text-align: center;
 }
+.vacature-container{
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(187,187,187,1) 100%);
+ }
 #vacatures{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    padding: 50px;
 }
-#vacatures ul{
+.hulpGezocht, .hulpAanbod{
     display: flex;
     flex-direction: column;
     flex-basis: 500px;
 }
-.vacature-container{
-    margin: 20px;
+.line1{
+    border-bottom: 50px solid white;
+    border-right: 100vw solid transparent;
+}
+.line2{
+    border-bottom: 50px solid black;
+    border-right: 100vw solid transparent;
+}
+.title{
+    padding-top: 20px;
 }

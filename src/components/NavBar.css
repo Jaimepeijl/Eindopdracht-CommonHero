@@ -1,26 +1,27 @@
 .logo img {
-    max-width: 300px;
+    max-width: 320px;
 }
 nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 120px;
-    padding: 0 48px;
+    height: 80px;
     z-index: 1;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
 }
 
 .Navbar, ul {
     list-style: none;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
     gap: 15px;
     width: 350px;
