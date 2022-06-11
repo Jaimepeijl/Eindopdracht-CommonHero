@@ -2,11 +2,11 @@ import './NavBar.css'
 import React, {useContext} from 'react'
 import logo from './../assets/R1.png'
 import {useHistory, Link, NavLink} from 'react-router-dom';
-// import {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../context/AuthContext";
 
 function NavBar(){
-    // const {logInFunction, isLoggedIn, logOutFunction} = useContext(AuthContext);
-    // const history = useHistory();
+    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
+    const history = useHistory();
     return (
         <nav>
             <span className="logo">
@@ -14,7 +14,8 @@ function NavBar(){
         <img src={logo} alt="CommonHero-Logo"/>
             </Link>
             </span>
-        <ul className="NavBar">
+        <div className="NavBar">
+            <ul>
             <li>
                 <NavLink
                     exact to='/hulp-zoeken'
@@ -29,14 +30,36 @@ function NavBar(){
                     Hulp Vragen
                 </NavLink>
             </li>
-            <li>
-                <NavLink
-                    exact to='/signin'
-                    activeClassName="active-link">
-                    Inloggen
-            </NavLink>
-            </li>
-        </ul>
-    </nav>)
+            {isLoggedIn &&
+                <li>
+                    <NavLink
+                        exact to='/profile'
+                        activeClassName="active-link">
+                        Profiel
+                    </NavLink>
+                </li>
+            }
+
+
+            {!isLoggedIn &&
+                    <button
+                        className="logButton"
+                        type="button"
+                        onClick={() => history.push('/signin')}>
+                        Inloggen
+                    </button>
+                }
+            {isLoggedIn &&
+                <button
+                    className="logButton"
+                    type="button"
+                    onClick={logOutFunction}
+                >
+                    Uitloggen
+                </button>
+            }</ul>
+        </div>
+    </nav>
+    )
 }
 export default NavBar
