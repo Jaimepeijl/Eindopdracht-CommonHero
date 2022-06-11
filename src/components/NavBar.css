@@ -16,7 +16,7 @@ nav {
     align-items: center;
 }
 
-.NavBar, ul {
+.Navbar, ul {
     list-style: none;
     display: flex;
     flex-direction: row;
@@ -47,4 +47,8 @@ nav a:hover {
     opacity: 1;
     transition: 0.5s;
     box-shadow: 1px 1px 10px black;
+}
+.logButton:hover {
+    opacity: 0.6;
+    cursor: pointer;
 }

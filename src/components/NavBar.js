@@ -37,9 +37,10 @@ function NavBar(){
                         activeClassName="active-link">
                         Profiel
                     </NavLink>
-                </li>}
+                </li>
+            }
 
-        </ul>
+
             {!isLoggedIn &&
                     <button
                         className="logButton"
@@ -53,11 +54,12 @@ function NavBar(){
                     className="logButton"
                     type="button"
                     onClick={logOutFunction}
-                    Link to='/'
                 >
                     Uitloggen
-                </button>}
+                </button>
+            }</ul>
         </div>
-    </nav>)
+    </nav>
+    )
 }
 export default NavBar

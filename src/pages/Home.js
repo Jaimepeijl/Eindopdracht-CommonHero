@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from "../components/Header";
 import HulpVragen from "./HulpVragen";
 import HulpZoeken from "./HulpZoeken";
+import Header from "../components/Header";
 
 function Home() {
     return (
         <>
             <Header/>
-            <body>
+            <div className="vacature-container">
             <h1>Zoek nu</h1>
             <div id="vacatures">
                 <ul className="HulpVacatures">
@@ -40,7 +40,8 @@ function Home() {
                     />
                 </ul>
             </div>
-            </body>
+            </div>
+
             <section>
                 <p>Als je ingelogd bent, bekijk dan de <Link to="/profile">Profielpagina</Link></p>
                 <p>Je kunt ook <Link to="/signin">inloggen</Link> of jezelf <Link to="/signup">registeren</Link> als je nog geen
