@@ -18,9 +18,9 @@ function NavBar(){
             <ul>
             <li>
                 <NavLink
-                    exact to='/hulp-zoeken'
+                    exact to='/hulp-aanbieden'
                     activeClassName="active-link">
-                    Hulp Zoeken
+                    Hulp Aanbieden
                 </NavLink>
             </li>
             <li>

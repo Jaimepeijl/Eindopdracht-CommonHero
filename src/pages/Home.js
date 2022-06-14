@@ -1,25 +1,30 @@
 import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import HulpVragenVac from "./HulpVragen";
-import HulpZoekenVac from "./HulpZoeken";
+import HulpAanbiedenVac from "../components/HulpAanbiedenVac"
+import HulpVragenVac from "../components/HulpVragenVac"
 import Header from "../components/Header";
 import Footer from "../components/Footer"
+import {AuthContext} from "../context/AuthContext";
+import {useContext} from "react";
 
 function Home() {
     const history = useHistory();
+    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
     return (
         <>
             <Header>
-            <section className="welcome">
-                <h1>Welkom bij CommonHero</h1>
+                <section className="welcome">
+                    {!isLoggedIn &&<>
+                    <h1>Welkom bij CommonHero</h1>
             <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
-            <button
+                    <button
                 type="button"
                 onClick={() => history.push('/signup')}
                 >
                 Aanmelden
             </button>
-            </section>
+                        </>}
+                </section>
                 <div className="line1"></div>
             </Header>
             <div className="vacature-container">
@@ -43,12 +48,12 @@ function Home() {
 
                 <ul className="hulpAanbod">
                     <h2>Hulp Aangeboden</h2>
-                    <HulpZoekenVac
+                    <HulpAanbiedenVac
                         title="Student zoekt vrijwilligerswerk voor in het weekend"
                         username="Gerrit-Jan"
                         summary="Ik ben een student van 22 en heb vaak in het weekend tijd over. Ik studeer geneeskunde dus zou eventueel daar wel iets mee willen doen. Laat weten als ik je ergens mee kan helpen!"
                     />
-                    <HulpZoekenVac
+                    <HulpAanbiedenVac
                         title="dignissimos asperiores"
                         username="Tenetur quod"
                         summary="Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?"

@@ -4,9 +4,9 @@ import Header from "../components/Header";
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import HulpVragenVac from "../components/HulpVragenVac";
+import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
 
-function HulpVragen() {
+function HulpAanbieden() {
     const {isLoggedIn, logOutFunction} = useContext(AuthContext);
     const history = useHistory();
 
@@ -30,13 +30,13 @@ function HulpVragen() {
                     <form type="submit" className="hulpForm">
                         <label htmlFor="username">Gebruikersnaam:</label>
                         <input type="text" id="username" name="username"/>
-                        <label htmlFor="title">Titel:</label>
-                        <input type="text" id="title" name="title"/>
+                            <label htmlFor="title">Titel:</label>
+                            <input type="text" id="title" name="title"/>
                         <textarea name="message" rows="10" cols="30" value="Samenvatting:">
                         </textarea>
                     </form>
                 </section>
-                }
+                    }
             </Header>
             <section className="vacature-section">
                 <form className="search">
@@ -49,19 +49,20 @@ function HulpVragen() {
                 </form>
 
                 <section className="vacatures">
-            <HulpVragenVac
-                title="vervoer gezocht voor oude mevrouw"
-                username="Mevr. de Vries"
-                summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
+                <HulpAanbiedenVac
+                title="Student zoekt vrijwilligerswerk voor in het weekend"
+                username="Gerrit-Jan"
+                summary="Ik ben een student van 22 en heb vaak in het weekend tijd over. Ik studeer geneeskunde dus zou eventueel daar wel iets mee willen doen. Laat weten als ik je ergens mee kan helpen!"
             />
-            <HulpVragenVac
-                title="vervoer gezocht voor oude mevrouw"
-                username="Mevr. de Vries"
-                summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
-            />
-        </section>
-        </section>
+                <HulpAanbiedenVac
+                    title="dignissimos asperiores"
+                    username="Tenetur quod"
+                    summary="Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?"
+                />
+            </section>
+            </section>
+
         </>
     )
 }
-export default HulpVragen;
+export default HulpAanbieden;

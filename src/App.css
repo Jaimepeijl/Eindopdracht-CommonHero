@@ -64,10 +64,23 @@ header h1, h1 {
 body{
     text-align: center;
 }
-.vacature-container{
+.vacature-container, .vacature-section{
     background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(187,187,187,1) 100%);
  }
+.vacature-section{
+    padding: 20px;
+    display: flex;
+
+}
+.search{
+    text-align: start;
+    border: 1px black solid;
+
+}
+.vacatures{
+
+}
 #vacatures{
     display: flex;
     flex-direction: row;
@@ -78,6 +91,18 @@ body{
     display: flex;
     flex-direction: column;
     flex-basis: 500px;
+}
+.hulpFormHeader{
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 50px;
+}
+.hulpForm{
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 .line1{
     border-bottom: 50px solid white;
