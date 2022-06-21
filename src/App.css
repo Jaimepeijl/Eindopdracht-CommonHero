@@ -115,3 +115,7 @@ body{
 .title{
     padding-top: 20px;
 }
+.image-preview {
+    width: 200px;
+    display: block;
+}

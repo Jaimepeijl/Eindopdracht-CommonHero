@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import './App.css';
 import HulpVragen from "./pages/HulpVragen";
 import HulpAanbieden from "./pages/HulpAanbieden";
+import Gebruikers from "./pages/Gebruikers";
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
                   <Route
                       exact path="/hulp-zoeken">
                       <HulpAanbieden/>
+                  </Route>
+                  <Route
+                      path="/gebruikers">
+                      <Gebruikers/>
                   </Route>
               </Switch>
           </div>

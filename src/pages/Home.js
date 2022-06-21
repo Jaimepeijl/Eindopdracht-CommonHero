@@ -14,15 +14,16 @@ function Home() {
         <>
             <Header>
                 <section className="welcome">
-                    {!isLoggedIn &&<>
+
                     <h1>Welkom bij CommonHero</h1>
-            <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
+                    {!isLoggedIn &&<>
+                    <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button
                 type="button"
                 onClick={() => history.push('/signup')}
                 >
                 Aanmelden
-            </button>
+                    </button>
                         </>}
                 </section>
                 <div className="line1"></div>
