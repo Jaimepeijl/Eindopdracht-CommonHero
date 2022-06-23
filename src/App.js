@@ -38,7 +38,7 @@ function App() {
                       <HulpVragen/>
                   </Route>
                   <Route
-                      exact path="/hulp-zoeken">
+                      exact path="/hulp-aanbieden">
                       <HulpAanbieden/>
                   </Route>
                   <Route

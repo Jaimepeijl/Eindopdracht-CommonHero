@@ -5,7 +5,7 @@ import {useHistory, Link, NavLink} from 'react-router-dom';
 import {AuthContext} from "../context/AuthContext";
 
 function NavBar(){
-    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
+    const {isAuth, logOutFunction} = useContext(AuthContext);
     const history = useHistory();
     return (
         <nav>
@@ -30,7 +30,7 @@ function NavBar(){
                     Hulp Vragen
                 </NavLink>
             </li>
-            {isLoggedIn &&
+            {isAuth &&
                 <li>
                     <NavLink
                         exact to='/profile'
@@ -41,7 +41,7 @@ function NavBar(){
             }
 
 
-            {!isLoggedIn &&
+            {!isAuth &&
                     <button
                         className="logButton"
                         type="button"
@@ -49,7 +49,7 @@ function NavBar(){
                         Inloggen
                     </button>
                 }
-            {isLoggedIn &&
+            {isAuth &&
                 <button
                     className="logButton"
                     type="button"

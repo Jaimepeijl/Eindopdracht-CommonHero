@@ -1,0 +1,24 @@
+Header {
+    z-index: -1;
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background: url('./../assets/little-girl-with-dad-dressed-super-heroes-happy-loving-family.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    gap: 30px;
+}
+Header::before {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.25);
+}

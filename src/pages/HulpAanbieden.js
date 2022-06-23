@@ -1,10 +1,11 @@
 import React from 'react'
 import './Vacatures.css'
-import Header from "../components/Header";
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import {useHistory} from "react-router-dom";
 import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
+import SmallHeader from "../components/SmallHeader";
+import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
 
 function HulpAanbieden() {
     const {isLoggedIn, logOutFunction} = useContext(AuthContext);
@@ -12,8 +13,10 @@ function HulpAanbieden() {
 
     return(
         <>
-            <Header>
-                {!isLoggedIn && <section className="welcome">
+            <SmallHeader
+                backgroundImage={backgroundImage} title="spiderman with kids">
+                {!isLoggedIn &&
+                <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button
@@ -37,7 +40,7 @@ function HulpAanbieden() {
                     </form>
                 </section>
                     }
-            </Header>
+            </SmallHeader>
             <section className="vacature-section">
                 <form className="search">
                     <h2>Hier komt een zoek dingetje met filters enzo</h2>

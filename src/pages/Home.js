@@ -6,6 +6,11 @@ import Header from "../components/Header";
 import Footer from "../components/Footer"
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
+import party from "./../assets/superhero.png"
+import robot from "./../assets/robot.png"
+import carRepair from "./../assets/car-repair.png"
+import wheelchair from "./../assets/wheelchair.png"
+import plant from "./../assets/plant.png"
 
 function Home() {
     const history = useHistory();
@@ -30,7 +35,7 @@ function Home() {
             </Header>
             <div className="vacature-container">
             <div className="title">
-                <h1>Zoek nu</h1>
+                <h1>Of bekijk hieronder alvast het aanbod</h1>
             </div>
             <div id="vacatures">
                 <ul className="hulpGezocht">
@@ -61,8 +66,70 @@ function Home() {
                     />
                 </ul>
             </div>
-                <div className="line2"></div>
+                <div className="line1"></div>
             </div>
+
+            <div className="webdev">
+                <section>
+                    <article>
+                        <img src={party} alt="superhero-icon"/>
+                        <h2>Party</h2>
+                        <p>Good web design is how companies stand out from their competitors. High quality web design
+                            leads to
+                            increased user conversion and engagement. Through a proven web design process, we help
+                            clients
+                            launch websites and products that improve on their bottom line.
+                        </p>
+                    </article>
+                    <article>
+                        <img src={robot} alt="robot-icon"/>
+                        <h2>Helping people from other cultures</h2>
+                        <p>Modern websites need to be responsive and fully functional at all sizes. We develop all of
+                            our sites
+                            with a mobile first approach and ensure that our code quality is clean, organized and
+                            performant.
+                            Already have a design but need it developed? We’re here to help!</p>
+                    </article>
+                    <article>
+                        <img src={carRepair} alt="car-repair-icon"/>
+                        <h2>Have a special skill or tools?</h2>
+                        <p>In order to build successful products you have to understand the user. We create user
+                            personas,
+                            wireframes and prototypes to test with users. This allows us to gather feedback which helps
+                            to shape
+                            the product and can quickly eliminate potential risks – saving you time and money.</p>
+                    </article>
+                    <article>
+                        <img src={wheelchair} alt="wheelchair-icon"/>
+                        <h2>Logo Design + Branding</h2>
+                        <p>Nike, Apple, Coca-Cola, Starbucks. What do all of these brands have in common? Easily
+                            recognizable
+                            logos and brand identity. The best brands stand out from the crowd by having a clear and
+                            unique
+                            point of view. We will work with you to understand your vision and help create a unique
+                            brand
+                            identity and style guide for your company.</p>
+                    </article>
+                    <article>
+                        <img src={plant} alt="plant-icon"/>
+                        <h2>SEO</h2>
+                        <p>Do you want your site to rank higher in search results? Google is constantly changing their
+                            algorithms for how they rank pages. Don’t worry about constantly playing catch-up. We will
+                            make sure
+                            your website it optimized, providing you the best opportunities for organic search
+                            exposure.</p>
+                    </article>
+                    <article>
+                        <h2>Copy Writing</h2>
+                        <p>Brand messaging needs to be clear, direct and easy to understand to be effective. A unique
+                            tone of
+                            voice will help you stand out from the crowd and build brand loyalty. We work with you to
+                            establish
+                            your brand bible and ensure your messaging is focused and targeted.</p>
+                    </article>
+                </section>
+            </div>
+            <div className="line2"></div>
 
             <Footer/>
         </>

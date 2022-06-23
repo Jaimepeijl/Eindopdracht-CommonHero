@@ -15,7 +15,7 @@ function Gebruikers(){
             }
         }
         fetchUsers();
-    }, []);
+    }, [users]);
 
  return(
  <div>

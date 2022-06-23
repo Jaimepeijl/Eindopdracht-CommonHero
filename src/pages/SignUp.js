@@ -1,6 +1,10 @@
-import Header from "../components/Header";
 import React, {useState} from "react";
 import axios from "axios";
+import SmallHeader from "../components/SmallHeader";
+import "./SignUp.css";
+import Footer from "../components/Footer";
+import {useHistory} from "react-router-dom";
+import backgroundImage from './../assets/ar-66uHNa7KFJ8-unsplash.jpg'
 
 function SignUp(){
     const [username, setUsername]  = useState('');
@@ -8,12 +12,14 @@ function SignUp(){
     const [email, setEmail]  = useState('');
     const [name, setName]  = useState('');
     const [city, setCity]  = useState('');
+    const history = useHistory();
 
     const [addSucces, toggleAddSuccess] = useState(false);
 
     async function addUser(e){
         e.preventDefault();
         console.log(name, email, username, city);
+
 
         try{
             const response = await axios.post('http://localhost:8080/users',{
@@ -37,11 +43,16 @@ function SignUp(){
 
     return(
         <>
-        <Header>
-            <h1>Maak hieronder een nieuw account aan!</h1>
-        </Header>{addSucces === true && <h2>Gebruiker is toegevoegd!</h2>}
+        <SmallHeader
+            backgroundImage={backgroundImage} title="superhero girl with geese" height={'100vh'} >
+
+            <div className="form-container">
+                {addSucces === true &&
+                    <h2>Gebruiker is toegevoegd!</h2>
+                }
             {!addSucces === true &&
-                <form onSubmit={addUser}>
+                <form className="login-form" onSubmit={addUser}>
+                    <h3>Maak hieronder een nieuw account aan!</h3>
                 <label htmlFor="user-name">
                     Naam en achternaam:
                     <input
@@ -89,10 +100,15 @@ function SignUp(){
                         value={city}
                         onChange={(e) => setCity(e.target.value)}/>
                 </label>
-                <button type="submit">
+                <button
+                    type="submit"
+                    className="submit-button"
+                    onClick={() => history.push('/')}>
                     Voeg gebruiker toe
                 </button>
             </form>}
-        </>)
+        </div></SmallHeader>
+            <Footer/>
+            </>)
 }
 export default SignUp

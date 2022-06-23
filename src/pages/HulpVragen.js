@@ -1,10 +1,11 @@
 import React from 'react'
 import './Vacatures.css'
-import Header from "../components/Header";
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import {useHistory} from "react-router-dom";
 import HulpVragenVac from "../components/HulpVragenVac";
+import SmallHeader from "../components/SmallHeader";
+import backgroundImage from './../assets/old-and-young-maptionnaire.jpeg'
 
 function HulpVragen() {
     const {isLoggedIn, logOutFunction} = useContext(AuthContext);
@@ -12,7 +13,8 @@ function HulpVragen() {
 
     return(
         <>
-            <Header>
+            <SmallHeader
+                backgroundImage={backgroundImage} title="people playing chess">
                 {!isLoggedIn && <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
@@ -37,12 +39,12 @@ function HulpVragen() {
                     </form>
                 </section>
                 }
-            </Header>
+            </SmallHeader>
             <section className="vacature-section">
                 <form className="search">
                     <h2>Hier komt een zoek dingetje met filters enzo</h2>
                     <input type="radio" id="stad" name="stad"/><label htmlFor="stad">In welke stad zoek je iets?</label>
-                    <textarea name="message" rows="3" cols="30" value="preferences">
+                    <textarea name="message" rows="3" cols="30" value="tekst enzo">
                     Heb je bepaalde voorkeuren?
                     </textarea>
                     <p>blablabla etc.etc.etc</p>

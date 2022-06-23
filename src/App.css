@@ -1,11 +1,16 @@
 /*TABLEOFCONTENTS:*/
-
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&family=Bebas+Neue&display=swap');
 /*1.GlobalStyles-------*/
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Anek Latin', sans-serif;
 }
+h1{
+    font-family: 'Bebas Neue', cursive;
+}
+
 /*2.Typography----------*/
 h3{
     color: #D84B1E;
@@ -13,28 +18,18 @@ h3{
 /*3.Layout--------------*/
 
 /*4.Areas---------------*/
-header {
-    position: relative;
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    background: url('./assets/tim-mossholder-9ulzDarOwEI-unsplash.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    gap: 30px;
-}
 .welcome{
-    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 25px;
 }
-
-header button {
+.welcome button{
+    margin: 20px
+}
+button {
     background-color: white;
     font-weight: 600;
     border: 2px solid #D84B1E;
@@ -44,10 +39,10 @@ header button {
     color: #D84B1E;
     opacity: 1;
     transition: 0.5s;
-    box-shadow: 1px 1px 10px black;
+    box-shadow: 1px 1px 10px gray;
 }
 
-header button:hover {
+button:hover {
     opacity: 0.6;
     cursor: pointer;
 }
@@ -55,7 +50,6 @@ header button:hover {
 header h1, h1 {
     font-size: 36px;
     color: #D84B1E;
-    /*text-shadow: 1px 1px 10px #888888;*/
 }
 .HeaderLogo img{
     max-width: 700px;
@@ -76,9 +70,6 @@ body{
 .search{
     text-align: start;
     border: 1px black solid;
-
-}
-.vacatures{
 
 }
 #vacatures{
@@ -105,8 +96,10 @@ body{
     gap: 10px;
 }
 .line1{
+    z-index: 1;
     border-bottom: 50px solid white;
     border-right: 100vw solid transparent;
+    margin-top: 200px;
 }
 .line2{
     border-bottom: 50px solid black;
@@ -118,4 +111,33 @@ body{
 .image-preview {
     width: 200px;
     display: block;
+}
+
+
+.webdev{
+    margin: 40px;
+    text-align: start;
+}
+.webdev section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    margin: 100px 0;
+}
+.webdev section article{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    flex: 1 0 300px;
+    padding: 30px;
+    margin: 15px;
+    gap: 15px;
+    border: 1px solid #00000057;
+    box-shadow: 6px 3px 18px #00000080;
+}
+.webdev img{
+    max-width: 50px;
+    height: 100%;
 }

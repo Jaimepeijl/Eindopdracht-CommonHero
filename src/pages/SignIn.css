@@ -1,0 +1,52 @@
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+p{
+    color: black;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 120px;
+    margin-top: 50px;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 2px 2px 15px black;
+    background-color: white;
+}
+label, input, select {
+    display: block;
+}
+input, select {
+    border: 1px solid #D84B1E;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.submit-button {
+    background-color: white;
+    font-weight: 600;
+    border: 2px solid #D84B1E;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #D84B1E;
+    opacity: 1;
+    transition: 0.5s;
+    margin: 15px;
+    padding: 10px;
+}
+
+button:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+

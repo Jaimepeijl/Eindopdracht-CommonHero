@@ -1,30 +1,64 @@
 import React, {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import {useForm} from "react-hook-form";
 import {AuthContext} from "../context/AuthContext";
-import Header from "../components/Header";
+import {useState} from "react";
+import "./SignIn.css";
+import Footer from "../components/Footer";
+import SmallHeader from "../components/SmallHeader";
+import backgroundImage from './../assets/tim-mossholder-9ulzDarOwEI-unsplash.jpg'
 
 function SignIn(){
-    const {logInFunction, isLoggedIn} = useContext(AuthContext);
-    console.log(isLoggedIn)
+    const [username, setUsername]  = useState('');
+    const [password, setPassword] = useState('')
+    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {logInFunction, isAuth} = useContext(AuthContext);
+    const history = useHistory();
+    console.log(isAuth)
+
+    function onLoginFormSubmit(e){
+        e.preventDefault();
+        console.log(e)
+        logInFunction()
+    }
     return(
         <>
-            <Header>
-                <h1>Heb je al een account?</h1>
-                <h1>Log hieronder in!</h1>
-            </Header>
-            <h1>Inloggen</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
-
-            <form className="login-form">
-                <p>*invoervelden*</p>
+            <SmallHeader
+                backgroundImage={backgroundImage} title="pavement texture" height={'100vh'} >
+                <div className="form-container">
+            <form className="login-form" onSubmit={handleSubmit(onLoginFormSubmit)}>
+                <h1>Inloggen</h1>
+                <label htmlFor="username">
+                    <p>Gebruikersnaam:</p>
+                    <input
+                        type="text"
+                        id="username"
+                        {...register("name")}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}/>
+                </label>
+                <label htmlFor="pass">
+                    <p>Wachtwoord (minimaal 8 karakters):</p>
+                    <input
+                        type="password"
+                        {...register("pass")}
+                        id="pass"
+                        value={password}
+                        minLength="8"
+                        required
+                        onChange={(e) => setPassword(e.target.value)}/>
+                </label>
                 <button
                     type="button"
-                    onClick={logInFunction}
+                    className="submit-button"
+                    onClick={() => history.push('/profile')}
                 >Inloggen
                 </button>
+                {!isAuth && <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>}
             </form>
-
-            {isLoggedIn && <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>}
+                </div>
+            </SmallHeader>
+            <Footer/>
         </>
     )
 }
