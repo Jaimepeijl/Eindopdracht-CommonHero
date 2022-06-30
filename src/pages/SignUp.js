@@ -3,8 +3,8 @@ import axios from "axios";
 import SmallHeader from "../components/SmallHeader";
 import "./SignUp.css";
 import Footer from "../components/Footer";
-import {useHistory} from "react-router-dom";
 import backgroundImage from './../assets/ar-66uHNa7KFJ8-unsplash.jpg'
+import {useHistory} from "react-router-dom";
 
 function SignUp(){
     const [username, setUsername]  = useState('');
@@ -12,6 +12,7 @@ function SignUp(){
     const [email, setEmail]  = useState('');
     const [name, setName]  = useState('');
     const [city, setCity]  = useState('');
+
     const history = useHistory();
 
     const [addSucces, toggleAddSuccess] = useState(false);
@@ -22,13 +23,9 @@ function SignUp(){
 
 
         try{
-            const response = await axios.post('http://localhost:8080/users',{
+            const response = await axios.post('http://localhost:8080/gebruikers/signup',{
                 username: username,
                 password: password,
-
-                enabled: true,
-                apiKey: 5,
-
                 email: email,
                 name: name,
                 city: city,
@@ -48,7 +45,17 @@ function SignUp(){
 
             <div className="form-container">
                 {addSucces === true &&
-                    <h2>Gebruiker is toegevoegd!</h2>
+                    <div className="login-form">
+                        <h1>Je account is aangemaakt!</h1>
+                        <p>Klik hieronder om gelijk in te loggen</p>
+                        <button
+                            className="button"
+                            type="button"
+                            onClick={() => history.push('/signin')}>
+                            Inloggen
+                        </button>
+                    </div>
+
                 }
             {!addSucces === true &&
                 <form className="login-form" onSubmit={addUser}>
@@ -102,8 +109,7 @@ function SignUp(){
                 </label>
                 <button
                     type="submit"
-                    className="submit-button"
-                    onClick={() => history.push('/')}>
+                    className="submit-button">
                     Voeg gebruiker toe
                 </button>
             </form>}

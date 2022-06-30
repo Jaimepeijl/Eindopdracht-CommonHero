@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from "react-router-dom";
 import HulpAanbiedenVac from "../components/HulpAanbiedenVac"
 import HulpVragenVac from "../components/HulpVragenVac"
 import Header from "../components/Header";
@@ -11,31 +11,31 @@ import robot from "./../assets/robot.png"
 import carRepair from "./../assets/car-repair.png"
 import wheelchair from "./../assets/wheelchair.png"
 import plant from "./../assets/plant.png"
+import friends from "./../assets/superheroFriends.png"
 
 function Home() {
+    const {isLoggedIn} = useContext(AuthContext);
     const history = useHistory();
-    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
     return (
         <>
             <Header>
-                <section className="welcome">
-
+                {!isLoggedIn &&
+                    <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
-                    {!isLoggedIn &&<>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button
-                type="button"
-                onClick={() => history.push('/signup')}
-                >
-                Aanmelden
+                        type="button"
+                        onClick={() => history.push('/signup')}
+                    >
+                        Aanmelden
                     </button>
-                        </>}
                 </section>
+                }
                 <div className="line1"></div>
             </Header>
             <div className="vacature-container">
             <div className="title">
-                <h1>Of bekijk hieronder alvast het aanbod</h1>
+                <h1>Bekijk hieronder alvast het aanbod</h1>
             </div>
             <div id="vacatures">
                 <ul className="hulpGezocht">
@@ -73,59 +73,47 @@ function Home() {
                 <section>
                     <article>
                         <img src={party} alt="superhero-icon"/>
-                        <h2>Party</h2>
-                        <p>Good web design is how companies stand out from their competitors. High quality web design
-                            leads to
-                            increased user conversion and engagement. Through a proven web design process, we help
-                            clients
-                            launch websites and products that improve on their bottom line.
+                        <h1>Samen Staan We Sterk!</h1>
+                        <p>
+                            Met alle problemen van vandaag zoekt CommonHero naar de oplossingen samen met iedereen die mee wilt doen. Iedereen kan voor iemand anders een held zijn.
                         </p>
                     </article>
                     <article>
                         <img src={robot} alt="robot-icon"/>
-                        <h2>Helping people from other cultures</h2>
-                        <p>Modern websites need to be responsive and fully functional at all sizes. We develop all of
-                            our sites
-                            with a mobile first approach and ensure that our code quality is clean, organized and
-                            performant.
-                            Already have a design but need it developed? We’re here to help!</p>
+                        <h1>Help Mensen Uit Andere Culturen</h1>
+                        <p>
+                            Er zijn nog nooit zo veel vluchtelingen in Nederland geweest.
+                            Het kan voor sommige mensen erg lastig zijn om aan Nederland te wennen.
+                            Wil jij deze mensen misschien een dagje meenemen of een Nederlands lesje geven? Kan jij misschien Arabisch of Oekraïens? Nog beter!
+                        </p>
                     </article>
                     <article>
                         <img src={carRepair} alt="car-repair-icon"/>
-                        <h2>Have a special skill or tools?</h2>
-                        <p>In order to build successful products you have to understand the user. We create user
-                            personas,
-                            wireframes and prototypes to test with users. This allows us to gather feedback which helps
-                            to shape
-                            the product and can quickly eliminate potential risks – saving you time and money.</p>
+                        <h1>Speciale Skill Of Handige Tools?</h1>
+                        <p>Niet iedereen kan overal goed in zijn. Heb jij een skill waarmee je andere kunt helpen? Denk bijvoorbeeld aan timmeren, medische zorg, of misschien internet aansluiten.
+                            Niet alles is voor iedereen zo makkelijk als voor jou en niet iedereen kan al het gereedschap hebben. Help jij een handje(?) mee?
+                        </p>
                     </article>
                     <article>
                         <img src={wheelchair} alt="wheelchair-icon"/>
-                        <h2>Logo Design + Branding</h2>
-                        <p>Nike, Apple, Coca-Cola, Starbucks. What do all of these brands have in common? Easily
-                            recognizable
-                            logos and brand identity. The best brands stand out from the crowd by having a clear and
-                            unique
-                            point of view. We will work with you to understand your vision and help create a unique
-                            brand
-                            identity and style guide for your company.</p>
+                        <h1>Help Mensen Die Het Nodig Hebben</h1>
+                        <p>
+                            Er zijn veel mensen die om verschillende redenen net iets meer moeite hebben met alledaagse dingen. Vaak kunnen deze mensen bijna alles maar met veel meer moeite.
+                            Je kunt je voorstellen dat het dan erg fijn is om een keertje hulp te hebben. Denk bijvoorbeeld aan boodschappen doen, een ritje naar familie of een muurtje dat nodig geverft moet worden.
+                        </p>
                     </article>
                     <article>
                         <img src={plant} alt="plant-icon"/>
-                        <h2>SEO</h2>
-                        <p>Do you want your site to rank higher in search results? Google is constantly changing their
-                            algorithms for how they rank pages. Don’t worry about constantly playing catch-up. We will
-                            make sure
-                            your website it optimized, providing you the best opportunities for organic search
-                            exposure.</p>
+                        <h1>Doe Wat Je Leuk Vind!</h1>
+                        <p>Heb jij een passie en vind je het leuk om daarmee mensen te helpen? Laat het ons weten en bied je hulp aan. Dit kan alles zijn van tuinieren, computeren, timmeren, auto rijden tot koken.
+
+                        </p>
                     </article>
                     <article>
-                        <h2>Copy Writing</h2>
-                        <p>Brand messaging needs to be clear, direct and easy to understand to be effective. A unique
-                            tone of
-                            voice will help you stand out from the crowd and build brand loyalty. We work with you to
-                            establish
-                            your brand bible and ensure your messaging is focused and targeted.</p>
+                        <img src={friends} alt="friends-icon"/>
+                        <h1>Maak Vrienden!</h1>
+                        <p>Als je mensen helpt ontmoet je vaak nieuwe vrienden. Is dat niet het mooiste wat er is? Er zijn enorm veel eenzame mensen in Nederland die een nieuwe vriend of vriendin kunnen gebruiken. Het kan soms moeilijk zijn om die te vinden.
+                        Help jij mee?</p>
                     </article>
                 </section>
             </div>

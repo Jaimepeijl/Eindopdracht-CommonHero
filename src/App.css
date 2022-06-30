@@ -15,6 +15,9 @@ h1{
 h3{
     color: #D84B1E;
 }
+p{
+    font-size: 18px;
+}
 /*3.Layout--------------*/
 
 /*4.Areas---------------*/
@@ -23,7 +26,7 @@ h3{
     flex-direction: column;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 25px;
 }
 .welcome button{
@@ -39,7 +42,7 @@ button {
     color: #D84B1E;
     opacity: 1;
     transition: 0.5s;
-    box-shadow: 1px 1px 10px gray;
+    box-shadow: 6px 3px 18px #00000080;
 }
 
 button:hover {
@@ -99,6 +102,8 @@ body{
     z-index: 1;
     border-bottom: 50px solid white;
     border-right: 100vw solid transparent;
+}
+Header .line1{
     margin-top: 200px;
 }
 .line2{
@@ -139,5 +144,8 @@ body{
 }
 .webdev img{
     max-width: 50px;
-    height: 100%;
+    height: 50px;
+}
+.webdev h1{
+    font-size: 30px;
 }

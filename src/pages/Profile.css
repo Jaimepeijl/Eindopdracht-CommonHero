@@ -1,0 +1,9 @@
+.image-preview-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+.image-preview{
+    border: #D84B1E solid 5px;
+}

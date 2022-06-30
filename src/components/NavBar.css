@@ -37,19 +37,7 @@ nav a:hover {
     text-decoration: underline;
 }
 .logButton{
-    background-color: white;
-    font-weight: 600;
-    border: 2px solid #D84B1E;
-    border-radius: 5px;
     padding: 10px 20px;
     margin-left: 20px;
     font-size: 15px;
-    color: #D84B1E;
-    opacity: 1;
-    transition: 0.5s;
-    box-shadow: 1px 1px 10px black;
-}
-.logButton:hover {
-    opacity: 0.6;
-    cursor: pointer;
 }

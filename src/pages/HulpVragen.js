@@ -8,14 +8,15 @@ import SmallHeader from "../components/SmallHeader";
 import backgroundImage from './../assets/old-and-young-maptionnaire.jpeg'
 
 function HulpVragen() {
-    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
+    const {isLoggedIn} = useContext(AuthContext);
     const history = useHistory();
 
     return(
         <>
             <SmallHeader
                 backgroundImage={backgroundImage} title="people playing chess">
-                {!isLoggedIn && <section className="welcome">
+                {!isLoggedIn &&
+                    <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button

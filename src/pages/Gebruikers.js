@@ -7,15 +7,15 @@ function Gebruikers(){
     useEffect(()=>{
         async function fetchUsers(){
             try {
-                const response = await axios.get('http://localhost:8080/users');
+                const response = await axios.get('http://localhost:8080/gebruikers');
                 setUsers(response.data);
-                console.log(users)
+                console.log(response.data)
             } catch (e) {
                 console.error(e)
             }
         }
         fetchUsers();
-    }, [users]);
+    }, []);
 
  return(
  <div>
