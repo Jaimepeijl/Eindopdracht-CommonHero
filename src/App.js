@@ -9,6 +9,7 @@ import './App.css';
 import HulpVragen from "./pages/HulpVragen";
 import HulpAanbieden from "./pages/HulpAanbieden";
 import Gebruikers from "./pages/Gebruikers";
+import VacMaken from "./pages/VacMaken";
 
 
 function App() {
@@ -44,6 +45,10 @@ function App() {
                   <Route
                       path="/gebruikers">
                       <Gebruikers/>
+                  </Route>
+                  <Route
+                      path="/vacmaken">
+                      <VacMaken/>
                   </Route>
               </Switch>
           </div>

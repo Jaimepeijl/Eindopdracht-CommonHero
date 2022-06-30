@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
@@ -6,40 +6,53 @@ import {useHistory} from "react-router-dom";
 import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
 import SmallHeader from "../components/SmallHeader";
 import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
+import axios from "axios";
 
 function HulpAanbieden() {
-    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
+    const {isLoggedIn, user, logOutFunction} = useContext(AuthContext);
     const history = useHistory();
+    const [vacInfo, setVacInfo] = useState([])
+
+    useEffect(()=>{
+        async function getVacancies(){
+            try{
+                const response = await axios.get('http://localhost:8080/vacancies')
+                setVacInfo(response.data)
+                console.log(vacInfo)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        getVacancies();
+    }, []);
 
     return(
         <>
             <SmallHeader
-                backgroundImage={backgroundImage} title="spiderman with kids">
-                {!isLoggedIn &&
+                backgroundImage={backgroundImage} title="spiderman with kids" height={'90vh'}>
+                {/*{!isLoggedIn &&*/}
+                {/*<section className="welcome">*/}
+                {/*    <h1>Welkom bij CommonHero</h1>*/}
+                {/*    <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>*/}
+                {/*    <button*/}
+                {/*        type="button"*/}
+                {/*        onClick={() => history.push('/signup')}*/}
+                {/*    >*/}
+                {/*        Aanmelden*/}
+                {/*    </button>*/}
+                {/*</section>*/}
+                }
+                {/*{isLoggedIn &&*/}
                 <section className="welcome">
-                    <h1>Welkom bij CommonHero</h1>
-                    <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
+                    <h1>Wilt u een vacature plaatsen?</h1>
+                    <h2>Klik dan op onderstaande knop</h2>
                     <button
                         type="button"
-                        onClick={() => history.push('/signup')}
-                    >
-                        Aanmelden
+                        onClick={() => history.push('/vacmaken')}>
+                        Gelijk een vacature maken
                     </button>
                 </section>
-                }
-                {isLoggedIn && <section className="hulpFormHeader">
-                    <h1>Heeft u ergens hulp bij nodig?</h1>
-                    <h2>Vul hieronder de velden in</h2>
-                    <form type="submit" className="hulpForm">
-                        <label htmlFor="username">Gebruikersnaam:</label>
-                        <input type="text" id="username" name="username"/>
-                            <label htmlFor="title">Titel:</label>
-                            <input type="text" id="title" name="title"/>
-                        <textarea name="message" rows="10" cols="30" value="Samenvatting:">
-                        </textarea>
-                    </form>
-                </section>
-                    }
+                    {/*}*/}
             </SmallHeader>
             <section className="vacature-section">
                 <form className="search">
@@ -52,16 +65,9 @@ function HulpAanbieden() {
                 </form>
 
                 <section className="vacatures">
-                <HulpAanbiedenVac
-                title="Student zoekt vrijwilligerswerk voor in het weekend"
-                username="Gerrit-Jan"
-                summary="Ik ben een student van 22 en heb vaak in het weekend tijd over. Ik studeer geneeskunde dus zou eventueel daar wel iets mee willen doen. Laat weten als ik je ergens mee kan helpen!"
-            />
-                <HulpAanbiedenVac
-                    title="dignissimos asperiores"
-                    username="Tenetur quod"
-                    summary="Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?"
-                />
+                    {vacInfo && vacInfo.map((info)=>{
+                        return <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                    })}
             </section>
             </section>
 

@@ -55,7 +55,6 @@ function SignUp(){
                             Inloggen
                         </button>
                     </div>
-
                 }
             {!addSucces === true &&
                 <form className="login-form" onSubmit={addUser}>
