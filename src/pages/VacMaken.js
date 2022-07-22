@@ -1,5 +1,4 @@
 import "./VacMaken.css";
-
 import React, {useEffect, useState} from 'react'
 import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
@@ -12,27 +11,26 @@ import axios from "axios";
 import Footer from "../components/Footer";
 
 function HulpAanbieden() {
-    const {isLoggedIn, user, logOutFunction} = useContext(AuthContext);
+    const {isAuth, user} = useContext(AuthContext);
     const history = useHistory();
     const [addSucces, toggleAddSuccess] = useState(false);
 
     const [publisher, setPublisher] = useState('Jaime');
     const [title, setTitle] = useState('');
     const [hours, setHours] = useState(1);
-    const [searchOrOffer, isSearchOrOffer] = useState('search');
+    const [vactype, setVactype] = useState('search');
     const [description, setDescription] = useState('');
 
     async function createVacancy(e){
         e.preventDefault();
-        console.log(publisher, title, hours, searchOrOffer, description);
+        console.log(publisher, title, hours, vactype, description);
 
         try{
             const response = await axios.post('http://localhost:8080/vacancies', {
-                // publisher: user,
-                publisher: publisher,
+                publisher: user.username,
                 title:  title,
                 hours: hours,
-                searchOrOffer: searchOrOffer,
+                vactype: vactype,
                 description: description,
             });
             console.log(response.data)
@@ -42,39 +40,36 @@ function HulpAanbieden() {
             console.error(e)
         }
     }
-    useEffect(()=>{
-        async function getVacancies(){
-            try{
-                const response = await axios.get('http://localhost:8080/vacancies')
-                console.log(response.data)
-            } catch (e) {
-                console.error(e)
-            }
-        }
-        getVacancies();
-    }, []);
-
     return(
         <>
             <SmallHeader
                 backgroundImage={backgroundImage} title="spiderman with kids" height={'100vh'}>
-                {/*{!isLoggedIn &&*/}
-                {/*<section className="welcome">*/}
-                {/*    <h1>Welkom bij CommonHero</h1>*/}
-                {/*    <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>*/}
-                {/*    <button*/}
-                {/*        type="button"*/}
-                {/*        onClick={() => history.push('/signup')}*/}
-                {/*    >*/}
-                {/*        Aanmelden*/}
-                {/*    </button>*/}
-                {/*</section>*/}
-                {/*{isLoggedIn &&*/}
+                {!isAuth &&
+                <section className="welcome">
+                    <h1>Welkom bij CommonHero</h1>
+                    <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
+                    <button
+                        type="button"
+                        onClick={() => history.push('/signup')}
+                    >
+                        Aanmelden
+                    </button>
+                </section>}
+                {isAuth &&
                 <section className="hulpFormHeader">
                     {addSucces === true &&
-                        <div className="login-form">
+                        <>
+                            <div className="login-form">
                             <h1>Je vacature is aangemaakt!</h1>
-                        </div>}
+
+                        </div>
+                        <button
+                        type="button"
+                        className="submit-button"
+                        onClick={() => history.push('/signin')}>
+                        Terug naar de vacature pagina
+                        </button>
+                        </>}
                     {!addSucces === true &&
                         <form className="hulpForm" onSubmit={createVacancy}>
                             <h1>Wilt u een vacature plaatsen?</h1>
@@ -105,32 +100,34 @@ function HulpAanbieden() {
                                     onChange={(e) => setHours(e.target.value)}/>
                             </label>
 
-                            <div className="searchOrOffer-container">
-                                <section>
-
+                            <div className="vactype-container">
+                                <p>Wat voor vacature wil je plaatsen?</p>
+                                <ul>
+                                <li>
                                     <label htmlFor="search">
-
                                         <input
+                                            className="radio"
                                             type="radio"
                                             id="search"
-                                            name="searchOrOffer"
+                                            name={vactype}
                                             value="search"
-                                            onChange={(e) => isSearchOrOffer(e.target.value)}/>
+                                            onChange={(e) => setVactype(e.target.value)}/>
                                         <p>Ik zoek hulp</p>
                                     </label>
-                                </section>
-                                <section>
+                                </li>
+                                <li>
                                     <label htmlFor="offer">
-
                                         <input
+                                            className="radio"
                                             type="radio"
                                             id="offer"
-                                            name="searchOrOffer"
+                                            name={vactype}
                                             value="offer"
-                                            onChange={(e) => isSearchOrOffer(e.target.value)}/>
+                                            onChange={(e) => setVactype(e.target.value)}/>
                                         <p>Ik bied hulp aan</p>
                                     </label>
-                                </section>
+                                </li>
+                            </ul>
                             </div>
                             <label htmlFor="Samenvatting:">
                                 <p>Bericht:</p>
@@ -148,7 +145,7 @@ function HulpAanbieden() {
                             </button>
                         </form>}
                 </section>
-                {/*}*/}
+                }
             </SmallHeader>
             <Footer/>
         </>

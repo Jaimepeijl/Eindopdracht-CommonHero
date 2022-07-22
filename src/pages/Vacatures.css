@@ -9,6 +9,9 @@
     margin: 16px;
     box-shadow: 6px 3px 18px #00000080;
 }
+.HulpVragen, .HulpZoeken h1{
+    padding: 20px;
+}
 
 .vacature-container, .vacature-section{
     background: rgb(255,255,255);
@@ -17,7 +20,6 @@
 .vacature-section{
     padding: 20px;
     display: flex;
-
 }
 .search{
     text-align: start;
@@ -36,19 +38,4 @@
     display: flex;
     flex-direction: column;
     flex-basis: 500px;
-}
-.hulpFormHeader{
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    margin: 50px;
-}
-.hulpForm{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: start;
-}
-input.radio {
-    width: auto;
-    display: block;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
-import HulpAanbiedenVac from "../components/HulpAanbiedenVac"
+import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
 import HulpVragenVac from "../components/HulpVragenVac"
 import Header from "../components/Header";
 import Footer from "../components/Footer"
@@ -12,24 +12,52 @@ import carRepair from "./../assets/car-repair.png"
 import wheelchair from "./../assets/wheelchair.png"
 import plant from "./../assets/plant.png"
 import friends from "./../assets/superheroFriends.png"
+import {useState} from "react";
+import {useEffect} from "react";
+import axios from "axios";
 
 function Home() {
-    const {isLoggedIn} = useContext(AuthContext);
+    const {isAuth} = useContext(AuthContext);
     const history = useHistory();
+    const [vacInfo, setVacInfo] = useState([])
+
+    useEffect(()=> {
+        async function getVacancies() {
+            try {
+                const response = await axios.get('http://localhost:8080/vacancies')
+                setVacInfo(response.data)
+                console.log(vacInfo)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        getVacancies();
+    }, []);
+
     return (
         <>
             <Header>
-                {!isLoggedIn &&
+                {!isAuth &&
                     <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button
                         type="button"
-                        onClick={() => history.push('/signup')}
-                    >
+                        onClick={() => history.push('/signup')}>
                         Aanmelden
                     </button>
                 </section>
+                }
+                {isAuth &&
+                    <section className="welcome">
+                        <h1>Wilt u een vacature plaatsen?</h1>
+                        <h2>Klik dan op onderstaande knop</h2>
+                        <button
+                            type="button"
+                            onClick={() => history.push('/vacmaken')}>
+                            Gelijk een vacature maken
+                        </button>
+                    </section>
                 }
                 <div className="line1"></div>
             </Header>
@@ -40,30 +68,32 @@ function Home() {
             <div id="vacatures">
                 <ul className="hulpGezocht">
                     <h2>Hulp Gezocht</h2>
+                    <section className="vacatures">
                     <HulpVragenVac
                         title="vervoer gezocht voor oude mevrouw"
                         username="Mevr. de Vries"
+                        hours="5"
                         summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
                     />
                     <HulpVragenVac
                         title="vervoer gezocht voor oude mevrouw"
                         username="Mevr. de Vries"
+                        hours="5"
                         summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
                     />
+                    </section>
                 </ul>
 
                 <ul className="hulpAanbod">
                     <h2>Hulp Aangeboden</h2>
-                    <HulpAanbiedenVac
-                        title="Student zoekt vrijwilligerswerk voor in het weekend"
-                        username="Gerrit-Jan"
-                        summary="Ik ben een student van 22 en heb vaak in het weekend tijd over. Ik studeer geneeskunde dus zou eventueel daar wel iets mee willen doen. Laat weten als ik je ergens mee kan helpen!"
-                    />
-                    <HulpAanbiedenVac
-                        title="dignissimos asperiores"
-                        username="Tenetur quod"
-                        summary="Consequatur rerum amet fuga expedita sunt et tempora saepe? Iusto nihil explicabo perferendis quos provident delectus ducimus necessitatibus reiciendis optio tempora unde earum doloremque commodi laudantium ad nulla vel odio?"
-                    />
+                    <section className="vacatures">
+                        {vacInfo && vacInfo.map((info)=>{
+                            console.log(vacInfo)
+                            return (
+                                <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                            )
+                        })}
+                    </section>
                 </ul>
             </div>
                 <div className="line1"></div>

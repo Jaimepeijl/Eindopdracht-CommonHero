@@ -7,3 +7,16 @@
 .image-preview{
     border: #D84B1E solid 5px;
 }
+.login-form h4{
+    padding: 20px;
+}
+.credentials ul{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.credentials li{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

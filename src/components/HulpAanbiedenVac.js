@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 
-
-const HulpAanbiedenVac = ({vacInfo}) => {
+function HulpAanbiedenVac ({vacInfo}) {
     const history = useHistory();//TODO vacatures moeten naar aparte pagina verwijzen met alle info van de vac.
+
     return(
         <article className="HulpZoeken">
             {Object.keys(vacInfo).length > 0 &&

@@ -1,5 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import SmallHeader from "../components/SmallHeader";
+import backgroundImage from "../assets/clark-tibbs-oqStl2L5oxI-unsplash.jpg";
+import "./Gebruikers.css"
+import Footer from "../components/Footer";
 
 function Gebruikers(){
     const [users, setUsers] = useState([]);
@@ -19,6 +23,9 @@ function Gebruikers(){
 
  return(
  <div>
+     <SmallHeader backgroundImage={backgroundImage} title="Do Something Great" height={'80vh'}>
+
+     </SmallHeader>
      <h1>Alle gebruikers</h1>
      <table>
          <thead>
@@ -28,6 +35,7 @@ function Gebruikers(){
              <th>Email</th>
              <th>Naam</th>
              <th>Stad</th>
+             <th>Foto</th>
          </tr>
          </thead>
          <tbody>
@@ -38,10 +46,12 @@ function Gebruikers(){
                  <td>{user.email}</td>
                  <td>{user.name}</td>
                  <td>{user.city}</td>
+                 <td>{user.file}</td>
              </tr>
          })}
          </tbody>
      </table>
+     <Footer/>
  </div>
  );
 }

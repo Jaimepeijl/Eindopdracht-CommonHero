@@ -17,30 +17,31 @@ function AuthContextProvider({children}){
         const token = localStorage.getItem('token')
 
         if(token  ) { //TODO check of de token nog geldig is
+            const decodedToken = jwtDecode(token);
+            console.log(decodedToken.sub)
             async function getUserData(){
-                const decodedToken = jwtDecode(token);
                 try {
-                    const response = await axios.get(`http://localhost:8080/gebruikers/${decodedToken.username}`, {
+                    const response = await axios.get(`http://localhost:8080/gebruikers/${decodedToken.sub}`, {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`,
                         }
-                    })
+                    });
                     console.log(response.data)
                     toggleAuth({
                         isAuth: true,
                         user: {
-                            email: response.data.email,
                             username:response.data.username,
-                            id: response.data.id,
+                            email:response.data.email,
                         },
                         status: 'done'
                     })
                 } catch (e) {
                     toggleAuth({
                         ...auth,
-                        status: 'done',
+                        status: 'error',
                     });
+                    localStorage.clear();
                     console.error(e);
                 }
             }
@@ -64,8 +65,7 @@ function AuthContextProvider({children}){
             ...auth,
             isAuth: true,
             user: {
-                email: decodedToken.email,
-                username: decodedToken.username,
+                username: decodedToken.sub,
             },
             status: 'done',
         });
@@ -73,12 +73,13 @@ function AuthContextProvider({children}){
         history.push('/profile')
     }
     function logOut(){
-        history.push('/')
         toggleAuth({
             isAuth: false,
             user: null,
             status: 'done',
         });
+        localStorage.clear();
+        history.push('/')
         console.log("Gebruiker is uitgelogd!")
     }
 
@@ -91,7 +92,9 @@ function AuthContextProvider({children}){
 
     return (
         <AuthContext.Provider value={contextData}>
-            {auth.status === 'done' ? children : <p>Aan het laden...</p>}
+            {auth.status === "done" && children}
+            {auth.status === "pending" && <p>Loading...</p>}
+            {auth.status === "error" && <p>Er ging wat mis! Refresh de pagina..</p>}
         </AuthContext.Provider>
     )
 }
