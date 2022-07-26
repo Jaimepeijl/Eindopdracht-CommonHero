@@ -19,14 +19,27 @@ import axios from "axios";
 function Home() {
     const {isAuth} = useContext(AuthContext);
     const history = useHistory();
-    const [vacInfo, setVacInfo] = useState([])
+    const [vacOfferInfo, setVacOfferInfo] = useState([])
+    const [vacSearchInfo, setVacSearchInfo] = useState([])
 
     useEffect(()=> {
         async function getVacancies() {
             try {
-                const response = await axios.get('http://localhost:8080/vacancies')
-                setVacInfo(response.data)
-                console.log(vacInfo)
+                const response = await axios.get('http://localhost:8080/vacancies/offer')
+                setVacOfferInfo(response.data)
+                console.log(vacOfferInfo)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        getVacancies();
+    }, []);
+    useEffect(()=> {
+        async function getVacancies() {
+            try {
+                const response = await axios.get('http://localhost:8080/vacancies/search')
+                setVacSearchInfo(response.data)
+                console.log(vacSearchInfo)
             } catch (e) {
                 console.error(e)
             }
@@ -87,8 +100,8 @@ function Home() {
                 <ul className="hulpAanbod">
                     <h2>Hulp Aangeboden</h2>
                     <section className="vacatures">
-                        {vacInfo && vacInfo.map((info)=>{
-                            console.log(vacInfo)
+                        {vacOfferInfo && vacOfferInfo.map((info)=>{
+                            console.log(vacOfferInfo)
                             return (
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>
                             )

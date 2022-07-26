@@ -46,7 +46,7 @@ function Gebruikers(){
                  <td>{user.email}</td>
                  <td>{user.name}</td>
                  <td>{user.city}</td>
-                 <td>{user.file}</td>
+                 <td>{user.file && <img src={user.file.url} alt={user.name}/>}</td>
              </tr>
          })}
          </tbody>

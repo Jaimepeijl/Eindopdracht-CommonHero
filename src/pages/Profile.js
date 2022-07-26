@@ -16,7 +16,9 @@ function Profile(){
     const [file, setFile] = useState([]);
     const [previewUrl, setPreviewUrl] = useState('');
     const [addSucces, toggleAddSuccess] = useState(false);
+    const [isPending, setIsPending] = useState(false);
 
+    const[profilePic, setProfilePic]  = useState('');
     const [username, setUsername]  = useState('');
     const [email, setEmail]  = useState('');
     const [name, setName]  = useState('');
@@ -34,6 +36,7 @@ function Profile(){
                     }
                     });
                 console.log(result.data)
+                setProfilePic(result.data.file)
                 setUsername(result.data.username)
                 setEmail(result.data.email)
                 setName(result.data.name)
@@ -53,6 +56,7 @@ function Profile(){
     }
 
     async function sendImage(e){
+        setIsPending(true)
         e.preventDefault();
         const formData = new FormData();
         formData.append("file", file);
@@ -65,7 +69,7 @@ function Profile(){
                         Authorization: `Bearer ${token}`
                     },
                 })
-            console.log(result.data)
+            setIsPending(false)
             toggleAddSuccess(true);
         } catch (e) {
             console.error(e)
@@ -92,7 +96,11 @@ function Profile(){
                 {isAuth &&
                     <form className="login-form" onSubmit={sendImage}>
                         <h4>Hoi {user.username}!</h4>
-                <h1>Upload hieronder je profiel foto</h1>
+                        {profilePic &&
+                            <section className="profile-pic">
+                                <img src={profilePic.url} alt={name}/>
+                            </section>}
+                         <h1>{profilePic ? 'Wijzig' : 'Upload'} hieronder je profiel foto</h1>
                 <label htmlFor="user-image">
                     Kies afbeelding:
                     <input type="file" name="image-field" id="user-image" onChange={handleImageChange}/>
@@ -108,7 +116,8 @@ function Profile(){
                         <h3>Ben jij soms fotomodel?</h3>
                     </label>
                 }
-                <button type="submit">Uploaden</button>
+                        {!isPending && <button type="submit">Uploaden</button>}
+                        {isPending && <h3>Aan het laden!</h3>}
 
 
                         <h4>Kloppen deze gegevens nog?</h4>

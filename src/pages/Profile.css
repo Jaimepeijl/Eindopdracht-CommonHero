@@ -1,4 +1,4 @@
-.image-preview-container{
+.image-preview-container, .profile-pic{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,6 +6,11 @@
 }
 .image-preview{
     border: #D84B1E solid 5px;
+}
+.profile-pic img{
+    max-width: 200px;
+    border: #D84B1E solid 5px;
+    border-radius: 50%;
 }
 .login-form h4{
     padding: 20px;

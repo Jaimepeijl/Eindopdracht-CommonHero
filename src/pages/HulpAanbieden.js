@@ -17,7 +17,7 @@ function HulpAanbieden() {
     useEffect(()=> {
         async function getVacancies() {
             try {
-                const response = await axios.get('http://localhost:8080/vacancies')
+                const response = await axios.get('http://localhost:8080/vacancies/offer')
                 setVacInfo(response.data)
                 console.log(vacInfo)
             } catch (e) {
@@ -26,10 +26,6 @@ function HulpAanbieden() {
         }
         getVacancies();
     }, []);
-
-    function vactype(vacInfo){
-        if(!vacInfo.vactype === "offer"){setVacInfo(null)}
-    }
 
     return(
         <>
@@ -70,7 +66,6 @@ function HulpAanbieden() {
                 </form>
 
                 <section className="vacatures">
-                    {vactype(vacInfo)}
                     {vacInfo && vacInfo.map((info)=>{
                         console.log(vacInfo)
                         return (

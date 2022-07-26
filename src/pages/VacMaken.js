@@ -18,7 +18,7 @@ function HulpAanbieden() {
     const [publisher, setPublisher] = useState('Jaime');
     const [title, setTitle] = useState('');
     const [hours, setHours] = useState(1);
-    const [vactype, setVactype] = useState('search');
+    const [vactype, setVactype] = useState('');
     const [description, setDescription] = useState('');
 
     function button (){
@@ -26,16 +26,33 @@ function HulpAanbieden() {
         else {history.push('/hulp-aanbieden')}
     }
 
-    async function createVacancy(e){
+    async function createOfferVacancy(e){
+        e.preventDefault();
+        console.log(publisher, title, hours, description);
+
+        try{
+            const response = await axios.post('http://localhost:8080/vacancies/offer', {
+                publisher: user.username,
+                title:  title,
+                hours: hours,
+                description: description,
+            });
+            console.log(response.data)
+            toggleAddSuccess(true);
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+    async function createSearchVacancy(e){
         e.preventDefault();
         console.log(publisher, title, hours, vactype, description);
 
         try{
-            const response = await axios.post('http://localhost:8080/vacancies', {
+            const response = await axios.post('http://localhost:8080/vacancies/search', {
                 publisher: user.username,
                 title:  title,
                 hours: hours,
-                vactype: vactype,
                 description: description,
             });
             console.log(response.data)
@@ -77,7 +94,19 @@ function HulpAanbieden() {
                         </button>
                         </>}
                     {!addSucces === true &&
-                        <form className="hulpForm" onSubmit={createVacancy}>
+
+                        <section>
+                            {vactype === '' &&
+                            <div><h1>Wat voor vacature wil je aanmaken?</h1>
+                            <button
+                                type="button"
+                                onClick={() =>setVactype('search')}>Ik wil graag hulp vragen</button>
+                            <button
+                                type="button"
+                                onClick={() =>setVactype('offer')}>Ik bied hulp aan</button>
+                            </div>}
+                            {vactype === 'offer' &&
+                        <form className="hulpForm" onSubmit={createOfferVacancy}>
                             <h1>Wilt u een vacature plaatsen?</h1>
                             <h2>Vul hieronder de velden in</h2>
                             <input
@@ -105,36 +134,6 @@ function HulpAanbieden() {
                                     value={hours}
                                     onChange={(e) => setHours(e.target.value)}/>
                             </label>
-
-                            <div className="vactype-container">
-                                <p>Wat voor vacature wil je plaatsen?</p>
-                                <ul>
-                                <li>
-                                    <label htmlFor="search">
-                                        <input
-                                            className="radio"
-                                            type="radio"
-                                            id="search"
-                                            name={vactype}
-                                            value="search"
-                                            onChange={(e) => setVactype(e.target.value)}/>
-                                        <p>Ik zoek hulp</p>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label htmlFor="offer">
-                                        <input
-                                            className="radio"
-                                            type="radio"
-                                            id="offer"
-                                            name={vactype}
-                                            value="offer"
-                                            onChange={(e) => setVactype(e.target.value)}/>
-                                        <p>Ik bied hulp aan</p>
-                                    </label>
-                                </li>
-                            </ul>
-                            </div>
                             <label htmlFor="Samenvatting:">
                                 <p>Bericht:</p>
                                 <textarea
@@ -151,6 +150,53 @@ function HulpAanbieden() {
                                 Plaats de vacature!
                             </button>
                         </form>}
+                            {vactype === 'search' &&
+                                <form className="hulpForm" onSubmit={createSearchVacancy}>
+                                    <h1>Wilt u een vacature plaatsen?</h1>
+                                    <h2>Vul hieronder de velden in</h2>
+                                    <input
+                                        type="hidden"
+                                        id="publisher"
+                                        name="publisher"
+                                        value={publisher}/>
+                                    <label htmlFor="title">
+                                        <p>Titel:</p>
+                                        <input
+                                            type="text"
+                                            id="title"
+                                            name="title"
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}/>
+                                    </label>
+                                    <label htmlFor="hours">
+                                        <p>Aantal uren (tussen 1 en 5):</p>
+                                        <input
+                                            type="number"
+                                            id="hours"
+                                            name="hours"
+                                            min="1"
+                                            max="5"
+                                            value={hours}
+                                            onChange={(e) => setHours(e.target.value)}/>
+                                    </label>
+
+                                    <label htmlFor="Samenvatting:">
+                                        <p>Bericht:</p>
+                                        <textarea
+                                            name="message"
+                                            className="samenvatting"
+                                            rows="10" cols="30"
+                                            placeholder="Wat zoek je precies?:"
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}/>
+                                    </label>
+                                    <button
+                                        type="submit"
+                                        className="submit-button">
+                                        Plaats de vacature!
+                                    </button>
+                                </form>}
+                        </section>}
                 </section>
                 }
             </SmallHeader>
