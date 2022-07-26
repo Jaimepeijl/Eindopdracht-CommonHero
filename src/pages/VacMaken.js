@@ -21,6 +21,11 @@ function HulpAanbieden() {
     const [vactype, setVactype] = useState('search');
     const [description, setDescription] = useState('');
 
+    function button (){
+        if(vactype === 'search'){history.push('/hulp-vragen')}
+        else {history.push('/hulp-aanbieden')}
+    }
+
     async function createVacancy(e){
         e.preventDefault();
         console.log(publisher, title, hours, vactype, description);
@@ -66,8 +71,9 @@ function HulpAanbieden() {
                         <button
                         type="button"
                         className="submit-button"
-                        onClick={() => history.push('/signin')}>
-                        Terug naar de vacature pagina
+                        onClick={button}
+                            >
+                        Naar de vacature pagina
                         </button>
                         </>}
                     {!addSucces === true &&
@@ -133,6 +139,7 @@ function HulpAanbieden() {
                                 <p>Bericht:</p>
                                 <textarea
                                     name="message"
+                                    className="samenvatting"
                                     rows="10" cols="30"
                                     placeholder="Wat zoek je precies?:"
                                     value={description}

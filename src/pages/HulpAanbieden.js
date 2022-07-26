@@ -27,6 +27,10 @@ function HulpAanbieden() {
         getVacancies();
     }, []);
 
+    function vactype(vacInfo){
+        if(!vacInfo.vactype === "offer"){setVacInfo(null)}
+    }
+
     return(
         <>
             <SmallHeader
@@ -66,6 +70,7 @@ function HulpAanbieden() {
                 </form>
 
                 <section className="vacatures">
+                    {vactype(vacInfo)}
                     {vacInfo && vacInfo.map((info)=>{
                         console.log(vacInfo)
                         return (
