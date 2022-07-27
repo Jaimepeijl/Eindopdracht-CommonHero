@@ -79,29 +79,22 @@ function Home() {
                 <h1>Bekijk hieronder alvast het aanbod</h1>
             </div>
             <div id="vacatures">
-                <ul className="hulpGezocht">
-                    <h2>Hulp Gezocht</h2>
-                    <section className="vacatures">
-                    <HulpVragenVac
-                        title="vervoer gezocht voor oude mevrouw"
-                        username="Mevr. de Vries"
-                        hours="5"
-                        summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
-                    />
-                    <HulpVragenVac
-                        title="vervoer gezocht voor oude mevrouw"
-                        username="Mevr. de Vries"
-                        hours="5"
-                        summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
-                    />
-                    </section>
-                </ul>
-
                 <ul className="hulpAanbod">
                     <h2>Hulp Aangeboden</h2>
                     <section className="vacatures">
                         {vacOfferInfo && vacOfferInfo.map((info)=>{
                             console.log(vacOfferInfo)
+                            return (
+                                <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                            )
+                        })}
+                    </section>
+                </ul>
+                <ul className="hulpGezocht">
+                    <h2>Hulp Gezocht</h2>
+                    <section className="vacatures">
+                        {vacSearchInfo && vacSearchInfo.map((info)=>{
+                            console.log(vacSearchInfo)
                             return (
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>
                             )

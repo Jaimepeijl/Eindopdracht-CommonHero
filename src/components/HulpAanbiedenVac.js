@@ -7,6 +7,7 @@ function HulpAanbiedenVac ({vacInfo}) {
         <article className="HulpZoeken">
             {Object.keys(vacInfo).length > 0 &&
             <>
+                {vacInfo.file && <img src={vacInfo.file.url} alt={vacInfo.title}/>}
             <div className="title-username">
             <h1>{vacInfo.title}</h1>
                 <h2>{vacInfo.publisher}</h2>

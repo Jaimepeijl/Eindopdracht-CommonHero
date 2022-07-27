@@ -7,12 +7,28 @@ import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
 import SmallHeader from "../components/SmallHeader";
 import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
 import axios from "axios";
-import HulpVragenVac from "../components/HulpVragenVac";
 
 function HulpAanbieden() {
-    const {isAuth, user, logOutFunction} = useContext(AuthContext);
+    const {isAuth} = useContext(AuthContext);
     const history = useHistory();
     const [vacInfo, setVacInfo] = useState([])
+
+    const [searchInput, setSearchInput] = useState('')
+    const [filteredResults, setFilteredResults] = useState([])
+
+    const searchItems = (searchValue) => {
+        setSearchInput(searchValue)
+        if(searchInput !== ''){
+            const filteredVacInfo = vacInfo.filter((info) => {
+                return Object.values(info).join('').toLowerCase().includes(searchInput.toLowerCase())
+                console.log(filteredVacInfo)
+        })
+        setFilteredResults(filteredVacInfo)
+        }
+        else{
+            setFilteredResults(vacInfo)
+        }
+    }
 
     useEffect(()=> {
         async function getVacancies() {
@@ -57,21 +73,33 @@ function HulpAanbieden() {
             </SmallHeader>
             <section className="vacature-section">
                 <form className="search">
-                    <h2>Hier komt een zoek dingetje met filters enzo</h2>
-                    <input type="radio" id="stad" name="stad"/><label htmlFor="stad">In welke stad zoek je iets?</label>
-                    <textarea name="message" rows="3" cols="30" value="preferences">
-                    Heb je bepaalde voorkeuren?
-                    </textarea>
-                    <p>blablabla etc.etc.etc</p>
+                    <h2>Wat zoek je precies?</h2>
+                    <input type='search'
+                           placeholder='Ik zoek...'
+                           onChange={(e)=> searchItems(e.target.value)}
+                           />
                 </form>
 
                 <section className="vacatures">
-                    {vacInfo && vacInfo.map((info)=>{
-                        console.log(vacInfo)
-                        return (
-                            <HulpAanbiedenVac vacInfo={info} key={info.title}/>
-                        )
-                    })}
+                    {searchInput.length > 1 ? (
+                        filteredResults.map((info) => {
+                            return (
+                                <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                            )
+                        })
+                    ) : (
+                        vacInfo.map((info) => {
+                            return (
+                                <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                            )
+                        })
+                    )}
+                    {/*{vacInfo && vacInfo.map((info)=>{*/}
+                    {/*    console.log(vacInfo)*/}
+                    {/*    return (*/}
+                    {/*        <HulpAanbiedenVac vacInfo={info} key={info.title}/>*/}
+                    {/*    )*/}
+                    {/*})}*/}
                 </section>
             </section>
         </>

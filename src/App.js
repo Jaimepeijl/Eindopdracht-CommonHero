@@ -35,12 +35,12 @@ function App() {
                       <SignUp/>
                   </Route>
                   <Route
-                      exact path="/hulp-vragen">
-                      <HulpVragen/>
-                  </Route>
-                  <Route
                       exact path="/hulp-aanbieden">
                       <HulpAanbieden/>
+                  </Route>
+                  <Route
+                      exact path="/hulp-vragen">
+                      <HulpVragen/>
                   </Route>
                   <Route
                       path="/gebruikers">

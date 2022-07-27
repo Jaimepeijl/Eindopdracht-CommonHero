@@ -22,8 +22,16 @@
     display: flex;
 }
 .search{
+    width: 30vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     text-align: start;
     border: 1px black solid;
+    margin: 16px;
+    padding: 16px;
+
 }
 .hulpForm p{
     color: white;

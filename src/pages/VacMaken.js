@@ -14,6 +14,11 @@ function HulpAanbieden() {
     const {isAuth, user} = useContext(AuthContext);
     const history = useHistory();
     const [addSucces, toggleAddSuccess] = useState(false);
+    const token = localStorage.getItem('token')
+
+    const [file, setFile] = useState([]);
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [isPending, setIsPending] = useState(false);
 
     const [publisher, setPublisher] = useState('Jaime');
     const [title, setTitle] = useState('');
@@ -28,6 +33,7 @@ function HulpAanbieden() {
 
     async function createOfferVacancy(e){
         e.preventDefault();
+        await sendImage()
         console.log(publisher, title, hours, description);
 
         try{
@@ -46,6 +52,7 @@ function HulpAanbieden() {
     }
     async function createSearchVacancy(e){
         e.preventDefault();
+        sendImage()
         console.log(publisher, title, hours, vactype, description);
 
         try{
@@ -62,6 +69,35 @@ function HulpAanbieden() {
             console.error(e)
         }
     }
+
+    function handleImageChange(e){
+        const uploadedFile = e.target.files[0];
+        setFile(uploadedFile)
+        console.log(uploadedFile);
+        setPreviewUrl(URL.createObjectURL(uploadedFile));
+    }
+    async function sendImage(){
+        setIsPending(true)
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const result = await axios.post(`http://localhost:8080/vacancies/${vactype}/8/photo`, formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`
+                    },
+                })
+            setIsPending(false)
+            toggleAddSuccess(true);
+            console.log(result.data)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     return(
         <>
             <SmallHeader
@@ -144,11 +180,24 @@ function HulpAanbieden() {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}/>
                             </label>
-                            <button
+
+                            <label htmlFor="vacancy-image">
+                                <p>Kies afbeelding:</p>
+                                <input type="file" name="image-field" id="vacancy-image" onChange={handleImageChange}/>
+                            </label>
+                            {previewUrl &&
+                                <label className="image-preview-container">
+                                    <h1>Zo komt de foto eruit te zien:</h1>
+                                    <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
+                                </label>
+                            }
+
+                            {!isPending && <button
                                 type="submit"
                                 className="submit-button">
                                 Plaats de vacature!
-                            </button>
+                            </button>}
+                            {isPending && <h3>Aan het laden!</h3>}
                         </form>}
                             {vactype === 'search' &&
                                 <form className="hulpForm" onSubmit={createSearchVacancy}>

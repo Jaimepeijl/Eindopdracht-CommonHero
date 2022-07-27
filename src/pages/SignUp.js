@@ -20,8 +20,6 @@ function SignUp(){
     async function addUser(e){
         e.preventDefault();
         console.log(name, email, username, city);
-
-
         try{
             const response = await axios.post('http://localhost:8080/gebruikers/signup',{
                 username: username,

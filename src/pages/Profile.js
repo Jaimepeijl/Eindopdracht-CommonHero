@@ -7,6 +7,7 @@ import backgroundImage from "../assets/tk-qJDkJRTedNw-unsplash.jpg";
 import "./Profile.css";
 import React from "react";
 import {useHistory} from "react-router-dom";
+import {useForm} from "react-hook-form";
 
 function Profile(){
     const {isAuth, user} = useContext(AuthContext);
@@ -23,6 +24,16 @@ function Profile(){
     const [email, setEmail]  = useState('');
     const [name, setName]  = useState('');
     const [city, setCity]  = useState('');
+
+    const [wijzigen, setWijzigen] = useState(false);
+    const handleWijzigen = () => {
+        setWijzigen(true)
+        console.log(wijzigen)
+    };
+
+    const [newEmail, setNewEmail]  = useState({email});
+    const [newName, setNewName]  = useState({name});
+    const [newCity, setNewCity]  = useState({city});
 
     useEffect(()=>{
         async function getProfileData(){
@@ -57,7 +68,7 @@ function Profile(){
 
     async function sendImage(e){
         setIsPending(true)
-        e.preventDefault();
+        // e.preventDefault();
         const formData = new FormData();
         formData.append("file", file);
         
@@ -75,11 +86,32 @@ function Profile(){
             console.error(e)
         }
     }
+
+    async function updateProfile(e){
+        e.preventDefault();
+        console.log(newName, newEmail, username, newCity);
+        try {
+            const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
+                username: username,
+                // password: password,
+                email: newEmail,
+                name: newName,
+                city: newCity,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(result.data)
+        } catch (e) {
+            console.error(e)
+        }}
     return<>
         <div>
             <SmallHeader
-                backgroundImage={backgroundImage} title="boy with batmancape" height={'100vh'} >
-            <div className="form-container">
+                backgroundImage={backgroundImage} title="boy with batmancape" height={'120vh'} >
+            <div className="profile-container">
 
                 {!isAuth &&
                     <section className="welcome">
@@ -94,7 +126,8 @@ function Profile(){
                 </section>}
 
                 {isAuth &&
-                    <form className="login-form" onSubmit={sendImage}>
+                    <div className="login-form">
+                    <form onSubmit={sendImage}>
                         <h4>Hoi {user.username}!</h4>
                         {profilePic &&
                             <section className="profile-pic">
@@ -118,17 +151,69 @@ function Profile(){
                 }
                         {!isPending && <button type="submit">Uploaden</button>}
                         {isPending && <h3>Aan het laden!</h3>}
+                    </form>
+
 
 
                         <h4>Kloppen deze gegevens nog?</h4>
-                        <section className="credentials">
-                        <ul>
+                        {!wijzigen &&
+                            <section className="credentials">
+
+                            <ul>
                         <li><h3>Naam: </h3> {name}</li>
                         <li><h3>Email: </h3>{email}</li>
                         <li><h3>Woonplaats: </h3> {city}</li>
+
+                            <button
+                            type="button"
+                            onClick={handleWijzigen}
+                            >
+                            Nee, Wijzigen
+                            </button>
                         </ul>
                         </section>
-            </form>
+                        }
+                        {wijzigen &&
+                            <section className="credentials">
+                                <form
+                                onSubmit={updateProfile}
+                                >
+                                <label htmlFor="user-name">
+                                    <h3>Naam en achternaam:</h3>
+                                    <input
+                                        type="text"
+                                        name="user-name-field"
+                                        id="user-name"
+                                        placeholder={name}
+                                        onChange={(e) => e.target.value && setNewName(e.target.value)}/>
+                                </label>
+                                <label htmlFor="user-email">
+                                    <h3>Email:</h3>
+                                    <input
+                                        type="email"
+                                        name="user-email-field"
+                                        id="user-email"
+                                        placeholder={email}
+                                        onChange={(e) => e.target.value && setNewEmail(e.target.value)}/>
+                                </label>
+                                <label htmlFor="user-city">
+                                    <h3>Woonplaats:</h3>
+                                    <input
+                                        type="city"
+                                        name="user-city-field"
+                                        id="user-city"
+                                        placeholder={city}
+                                        onChange={(e) => e.target.value && setNewCity(e.target.value)}/>
+                                </label>
+                                <button
+                                    type="submit"
+                                    className="submit-button">
+                                    Opslaan
+                                </button>
+                                </form>
+                            </section>}
+
+                    </div>
                 }
         </div>
             </SmallHeader>
