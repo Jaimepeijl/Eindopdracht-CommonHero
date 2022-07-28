@@ -10,7 +10,16 @@
     box-shadow: 6px 3px 18px #00000080;
 }
 .HulpVragen, .HulpZoeken h1{
-    padding: 20px;
+    padding: 10px;
+}
+.HulpVragen img{
+    max-width: 150px;
+}
+.HulpZoeken img{
+    max-width: 150px;
+}
+.title-username{
+    margin-bottom: 10px;
 }
 a:link, a:active{
     color: #D84B1E;
@@ -54,4 +63,25 @@ a:visited, a:hover {
     display: flex;
     flex-direction: column;
     flex-basis: 500px;
+}
+.full-vac {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 200px;
+    gap: 10px;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 2px 2px 15px black;
+    background-color: white;
+}
+.full-vac img{
+    max-width: 350px;
+}
+.respond{
+    border: 1px solid #D84B1E;
+    align-content: start;
+    padding: 10px;
+    margin: 10px;
+    text-align: start;
 }

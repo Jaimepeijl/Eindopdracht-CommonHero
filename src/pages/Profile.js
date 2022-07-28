@@ -93,7 +93,6 @@ function Profile(){
         try {
             const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
                 username: username,
-                // password: password,
                 email: newEmail,
                 name: newName,
                 city: newCity,
@@ -107,6 +106,7 @@ function Profile(){
         } catch (e) {
             console.error(e)
         }}
+
     return<>
         <div>
             <SmallHeader
@@ -168,7 +168,7 @@ function Profile(){
                             type="button"
                             onClick={handleWijzigen}
                             >
-                            Nee, Wijzigen
+                            Wijzigen
                             </button>
                         </ul>
                         </section>
@@ -185,7 +185,7 @@ function Profile(){
                                         name="user-name-field"
                                         id="user-name"
                                         placeholder={name}
-                                        onChange={(e) => e.target.value && setNewName(e.target.value)}/>
+                                        onChange={(e) => setNewName(e.target.value)}/>
                                 </label>
                                 <label htmlFor="user-email">
                                     <h3>Email:</h3>
@@ -194,7 +194,7 @@ function Profile(){
                                         name="user-email-field"
                                         id="user-email"
                                         placeholder={email}
-                                        onChange={(e) => e.target.value && setNewEmail(e.target.value)}/>
+                                        onChange={(e) => setNewEmail(e.target.value)}/>
                                 </label>
                                 <label htmlFor="user-city">
                                     <h3>Woonplaats:</h3>
@@ -203,7 +203,7 @@ function Profile(){
                                         name="user-city-field"
                                         id="user-city"
                                         placeholder={city}
-                                        onChange={(e) => e.target.value && setNewCity(e.target.value)}/>
+                                        onChange={(e) => setNewCity(e.target.value)}/>
                                 </label>
                                 <button
                                     type="submit"

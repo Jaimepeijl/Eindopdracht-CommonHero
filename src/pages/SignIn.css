@@ -21,6 +21,9 @@ p{
     box-shadow: 2px 2px 15px black;
     background-color: white;
 }
+.error-message{
+    color: red;
+}
 label, input, select {
     display: block;
 }

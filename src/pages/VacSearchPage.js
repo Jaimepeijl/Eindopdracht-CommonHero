@@ -54,25 +54,27 @@ return (
             <article className="full-vac">
             {thisVac.file && <img src={thisVac.file.url} alt={thisVac.title}/>}
         <div className="title-username">
-        <h1>{thisVac.name}</h1>
-        <h2>{thisVac.publisher}</h2>
+        <h1>{thisVac.title}</h1>
+        <p>{thisVac.publisher}, {thisVac.city}</p>
         <h3>{thisVac.hours} uur </h3>
         </div>
     <p>{thisVac.description}</p>
-            {isAuth ?
+                {!respond && <div>{isAuth ?
             <button
             type="button"
             onClick={reageren}>Reageren
             </button>
-            : <h1>Om te reageren moet je eerst inloggen!</h1>
-            }
+            : <h3>Om te reageren moet u eerst inloggen</h3>
+            }</div>}
 
-            {respond &&
-            <section>
-                <h1>Je kunt reageren door de gebruiker te mailen: </h1>
-                {publisherName}
-                {publisherEmail}
-            </section>}
+                {respond &&
+                    <section>
+                        <h1>U kunt reageren door de gebruiker te mailen: </h1>
+                        <div className="respond">
+                            <h3>Naam: </h3>{publisherName}
+                            <h3>Email: </h3>{publisherEmail}
+                        </div>
+                    </section>}
             </article>
         </SmallHeader>
     </div>

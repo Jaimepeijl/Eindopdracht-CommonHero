@@ -7,8 +7,8 @@ function HulpAanbiedenVac ({vacInfo}) {
         <article className="HulpZoeken">
             {Object.keys(vacInfo).length > 0 &&
             <>
-                {vacInfo.file && <img src={vacInfo.file.url} alt={vacInfo.title}/>}
             <div className="title-username">
+                {vacInfo.file && <img src={vacInfo.file.url} alt={vacInfo.title}/>}
             <h1>
                 <Link to={{
                     pathname: `/hulp-aanbieden/${id}`,
@@ -17,7 +17,7 @@ function HulpAanbiedenVac ({vacInfo}) {
                     {vacInfo.title}
                 </Link>
             </h1>
-                <h2>{vacInfo.publisher}</h2>
+                <h2>{vacInfo.publisher}, {vacInfo.city}</h2>
                 <h3>{vacInfo.hours} uur </h3>
             </div>
                 <p>{vacInfo.description}</p>

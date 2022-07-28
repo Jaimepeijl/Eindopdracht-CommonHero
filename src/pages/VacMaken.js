@@ -1,10 +1,9 @@
 import "./VacMaken.css";
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
 import SmallHeader from "../components/SmallHeader";
 import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
 import axios from "axios";
@@ -17,10 +16,12 @@ function HulpAanbieden() {
     const token = localStorage.getItem('token')
 
     const [file, setFile] = useState([]);
+    const [file2Big, setFile2Big] = useState('')
     const [previewUrl, setPreviewUrl] = useState('');
     const [isPending, setIsPending] = useState(false);
 
     const [publisher, setPublisher] = useState('');
+    const [uploaded, setUploaded] = useState(false)
     const [vacId, setVacId] = useState(null);
     const [title, setTitle] = useState('');
     const [hours, setHours] = useState(1);
@@ -35,7 +36,6 @@ function HulpAanbieden() {
 
     async function createOfferVacancy(e){
         e.preventDefault();
-        await sendImage()
         console.log(title, hours, description);
         setVacType('offer')
 
@@ -57,7 +57,6 @@ function HulpAanbieden() {
     }
     async function createSearchVacancy(e){
         e.preventDefault();
-        sendImage()
         console.log(title, hours, vactype, description);
         setVacType('search')
 
@@ -68,7 +67,8 @@ function HulpAanbieden() {
                 hours: hours,
                 description: description,
             });
-            console.log(response.data)
+            console.log(response.data.id)
+            setVacId(response.data.id)
             toggleAddSuccess(true);
 
         } catch (e) {
@@ -78,9 +78,14 @@ function HulpAanbieden() {
 
     function handleImageChange(e){
         const uploadedFile = e.target.files[0];
+        if(uploadedFile.size > 1048576){
+            setFile2Big('Het bestand is te groot!')
+        } else  {
+            setFile2Big('')
         setFile(uploadedFile)
         console.log(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
+        }
     }
     async function sendImage(){
         setIsPending(true)
@@ -96,7 +101,7 @@ function HulpAanbieden() {
                     },
                 })
             setIsPending(false)
-            toggleAddSuccess(true);
+            setUploaded(true)
             console.log(result.data)
         } catch (e) {
             console.error(e)
@@ -131,19 +136,22 @@ function HulpAanbieden() {
                                 <h2>Je kunt ook nog een afbeelding toevoegen!</h2>
                             <label htmlFor="vacancy-image">
                                 <input type="file" name="image-field" id="vacancy-image" className="add-image"onChange={handleImageChange}/>
+                                <p className="error-message">{file2Big}</p>
                             </label>
                             {previewUrl &&
                                 <div>
                                     <label className="image-preview-container">
                                     <h1>Zo komt de foto eruit te zien:</h1>
                                     <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
+
                                 </label>
-                                <button
+                                    {!uploaded && <button
                                 type="button"
                                 onClick={sendImage}
                                 >
                                 Afbeelding opslaan
-                                </button>
+                                </button>}
+                                    {uploaded && <h2>De foto is toegevoegd!</h2>}
                                 </div>
                             }
                             </section>
@@ -255,11 +263,12 @@ function HulpAanbieden() {
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}/>
                                     </label>
-                                    <button
+                                    {!isPending && <button
                                         type="submit"
                                         className="submit-button">
                                         Plaats de vacature!
-                                    </button>
+                                    </button>}
+                                    {isPending && <h3>Aan het laden!</h3>}
                                 </form>}
                         </section>}
                 </section>

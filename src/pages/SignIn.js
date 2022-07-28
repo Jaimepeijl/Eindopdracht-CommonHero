@@ -18,6 +18,8 @@ function SignIn(){
 
     const history = useHistory();
 
+    const isValid = username !== '' && password !== '';
+
     async function onLoginFormSubmit(data){
         try{
             const response = await axios.post('http://localhost:8080/authenticate', {
@@ -65,6 +67,7 @@ function SignIn(){
                 <button
                     type="submit"
                     className="submit-button"
+                    disabled={!isValid}
                 >Inloggen
                 </button>
                 {!isAuth && <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>}

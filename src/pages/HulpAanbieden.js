@@ -94,12 +94,6 @@ function HulpAanbieden() {
                             )
                         })
                     )}
-                    {/*{vacInfo && vacInfo.map((info)=>{*/}
-                    {/*    console.log(vacInfo)*/}
-                    {/*    return (*/}
-                    {/*        <HulpAanbiedenVac vacInfo={info} key={info.title}/>*/}
-                    {/*    )*/}
-                    {/*})}*/}
                 </section>
             </section>
         </>
