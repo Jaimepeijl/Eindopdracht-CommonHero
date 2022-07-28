@@ -20,11 +20,13 @@ function HulpAanbieden() {
     const [previewUrl, setPreviewUrl] = useState('');
     const [isPending, setIsPending] = useState(false);
 
-    const [publisher, setPublisher] = useState('Jaime');
+    const [publisher, setPublisher] = useState('');
+    const [vacId, setVacId] = useState(null);
     const [title, setTitle] = useState('');
     const [hours, setHours] = useState(1);
-    const [vactype, setVactype] = useState('');
+    const [vactype, setVacType] = useState('');
     const [description, setDescription] = useState('');
+
 
     function button (){
         if(vactype === 'search'){history.push('/hulp-vragen')}
@@ -34,7 +36,8 @@ function HulpAanbieden() {
     async function createOfferVacancy(e){
         e.preventDefault();
         await sendImage()
-        console.log(publisher, title, hours, description);
+        console.log(title, hours, description);
+        setVacType('offer')
 
         try{
             const response = await axios.post('http://localhost:8080/vacancies/offer', {
@@ -43,7 +46,9 @@ function HulpAanbieden() {
                 hours: hours,
                 description: description,
             });
-            console.log(response.data)
+            console.log(response.data.id)
+            setVacId(response.data.id)
+            console.log(vacId)
             toggleAddSuccess(true);
 
         } catch (e) {
@@ -53,7 +58,8 @@ function HulpAanbieden() {
     async function createSearchVacancy(e){
         e.preventDefault();
         sendImage()
-        console.log(publisher, title, hours, vactype, description);
+        console.log(title, hours, vactype, description);
+        setVacType('search')
 
         try{
             const response = await axios.post('http://localhost:8080/vacancies/search', {
@@ -82,7 +88,7 @@ function HulpAanbieden() {
         formData.append("file", file);
 
         try {
-            const result = await axios.post(`http://localhost:8080/vacancies/${vactype}/8/photo`, formData,
+            const result = await axios.post(`http://localhost:8080/vacancies/${vactype}/${vacId}/photo`, formData,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -121,6 +127,27 @@ function HulpAanbieden() {
                             <h1>Je vacature is aangemaakt!</h1>
 
                         </div>
+                            <section className="image-container">
+                                <h2>Je kunt ook nog een afbeelding toevoegen!</h2>
+                            <label htmlFor="vacancy-image">
+                                <input type="file" name="image-field" id="vacancy-image" className="add-image"onChange={handleImageChange}/>
+                            </label>
+                            {previewUrl &&
+                                <div>
+                                    <label className="image-preview-container">
+                                    <h1>Zo komt de foto eruit te zien:</h1>
+                                    <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
+                                </label>
+                                <button
+                                type="button"
+                                onClick={sendImage}
+                                >
+                                Afbeelding opslaan
+                                </button>
+                                </div>
+                            }
+                            </section>
+
                         <button
                         type="button"
                         className="submit-button"
@@ -136,10 +163,10 @@ function HulpAanbieden() {
                             <div><h1>Wat voor vacature wil je aanmaken?</h1>
                             <button
                                 type="button"
-                                onClick={() =>setVactype('search')}>Ik wil graag hulp vragen</button>
+                                onClick={() =>setVacType('search')}>Ik wil graag hulp vragen</button>
                             <button
                                 type="button"
-                                onClick={() =>setVactype('offer')}>Ik bied hulp aan</button>
+                                onClick={() =>setVacType('offer')}>Ik bied hulp aan</button>
                             </div>}
                             {vactype === 'offer' &&
                         <form className="hulpForm" onSubmit={createOfferVacancy}>
@@ -180,17 +207,6 @@ function HulpAanbieden() {
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}/>
                             </label>
-
-                            <label htmlFor="vacancy-image">
-                                <p>Kies afbeelding:</p>
-                                <input type="file" name="image-field" id="vacancy-image" onChange={handleImageChange}/>
-                            </label>
-                            {previewUrl &&
-                                <label className="image-preview-container">
-                                    <h1>Zo komt de foto eruit te zien:</h1>
-                                    <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
-                                </label>
-                            }
 
                             {!isPending && <button
                                 type="submit"

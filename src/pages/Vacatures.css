@@ -12,6 +12,14 @@
 .HulpVragen, .HulpZoeken h1{
     padding: 20px;
 }
+a:link, a:active{
+    color: #D84B1E;
+    text-decoration: none;
+}
+a:visited, a:hover {
+    color: red;
+    text-decoration: none;
+}
 
 .vacature-container, .vacature-section{
     background: rgb(255,255,255);

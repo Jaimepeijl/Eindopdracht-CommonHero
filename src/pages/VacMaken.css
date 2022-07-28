@@ -19,3 +19,13 @@
 .samenvatting{
     width: 100%;
 }
+.add-image{
+    margin: 10px;
+}
+.image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #D84B1E;
+}
