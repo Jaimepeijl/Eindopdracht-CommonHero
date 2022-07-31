@@ -129,7 +129,7 @@ function SignUp(){
                         {...register("email", {
                             required: "Gaarne je email invullen!",
                             maxLength: {
-                                value: 20,
+                                value: 30,
                                 message: "Oei, dat is wel een heel lang email adres! Kan die niet korter?"
                             },
                             pattern: {

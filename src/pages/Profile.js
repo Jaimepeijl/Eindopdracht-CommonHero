@@ -7,7 +7,6 @@ import backgroundImage from "../assets/tk-qJDkJRTedNw-unsplash.jpg";
 import "./Profile.css";
 import React from "react";
 import {useHistory} from "react-router-dom";
-import {useForm} from "react-hook-form";
 
 function Profile(){
     const {isAuth, user} = useContext(AuthContext);
@@ -88,7 +87,7 @@ function Profile(){
     }
 
     async function updateProfile(e){
-        e.preventDefault();
+        // e.preventDefault();
         console.log(newName, newEmail, username, newCity);
         try {
             const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
@@ -134,8 +133,8 @@ function Profile(){
                                 <img src={profilePic.url} alt={name}/>
                             </section>}
                          <h1>{profilePic ? 'Wijzig' : 'Upload'} hieronder je profiel foto</h1>
-                <label htmlFor="user-image">
-                    Kies afbeelding:
+                <label htmlFor="user-image" className="user-image">
+                    Kies jouw afbeelding:
                     <input type="file" name="image-field" id="user-image" onChange={handleImageChange}/>
                 </label>
                 {addSucces === true &&
@@ -153,24 +152,23 @@ function Profile(){
                         {isPending && <h3>Aan het laden!</h3>}
                     </form>
 
-
-
                         <h4>Kloppen deze gegevens nog?</h4>
                         {!wijzigen &&
                             <section className="credentials">
 
                             <ul>
-                        <li><h3>Naam: </h3> {name}</li>
+                        <li><h3>Naam en achternaam: </h3> {name}</li>
                         <li><h3>Email: </h3>{email}</li>
                         <li><h3>Woonplaats: </h3> {city}</li>
 
-                            <button
-                            type="button"
-                            onClick={handleWijzigen}
-                            >
-                            Wijzigen
-                            </button>
+
                         </ul>
+                                <button
+                                type="button"
+                                onClick={handleWijzigen}
+                            >
+                                Wijzigen
+                            </button>
                         </section>
                         }
                         {wijzigen &&
@@ -211,7 +209,15 @@ function Profile(){
                                     Opslaan
                                 </button>
                                 </form>
+
                             </section>}
+                        <h4>Wil je jouw vacatures inzien, bewerken of verwijderen?</h4>
+                        <button
+                        className="button"
+                        type="button"
+                        onClick={() => history.push('/mijnvacs')}>
+                        Naar je vacature overzicht
+                    </button>
 
                     </div>
                 }

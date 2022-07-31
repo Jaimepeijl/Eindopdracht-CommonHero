@@ -1,0 +1,9 @@
+.mijn-vacature-page{
+    padding: 20px;
+}
+.not-found{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px;
+}

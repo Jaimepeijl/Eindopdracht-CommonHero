@@ -23,7 +23,6 @@ function HulpVragen() {
         if(searchInput !== ''){
             const filteredVacInfo = vacInfo.filter((info) => {
                 return Object.values(info).join('').toLowerCase().includes(searchInput.toLowerCase())
-                console.log(filteredVacInfo)
             })
             setFilteredResults(filteredVacInfo)
         }

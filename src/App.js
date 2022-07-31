@@ -12,6 +12,7 @@ import Gebruikers from "./pages/Gebruikers";
 import VacMaken from "./pages/VacMaken";
 import VacOfferPage from "./pages/VacOfferPage";
 import VacSearchPage from "./pages/VacSearchPage";
+import MijnVacs from "./pages/MijnVacs";
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
                       <HulpVragen/>
                   </Route>
                   <Route
-                      path="/gebruikers">
+                      path="/gebruikers/admin">
                       <Gebruikers/>
                   </Route>
                   <Route
@@ -59,6 +60,10 @@ function App() {
                   <Route
                       exact path="/hulp-vragen/:searchId" component={VacSearchPage}>
                       <VacSearchPage/>
+                  </Route>
+                  <Route
+                      exact path="/mijnvacs">
+                      <MijnVacs/>
                   </Route>
               </Switch>
           </div>

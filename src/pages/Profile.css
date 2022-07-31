@@ -2,23 +2,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    padding: 20px;
 }
 .image-preview{
     border: #D84B1E solid 5px;
+}
+.user-image{
+    margin: 15px;
 }
 .profile-pic img{
     max-width: 200px;
     border: #D84B1E solid 5px;
     border-radius: 50%;
 }
-.login-form h4{
-    padding: 20px;
+.credentials{
+    border: 1px solid #D84B1E;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 .credentials ul{
     display: flex;
     flex-direction: column;
     align-items: start;
+    margin-bottom: 20px;
 }
 .credentials li{
     display: flex;
