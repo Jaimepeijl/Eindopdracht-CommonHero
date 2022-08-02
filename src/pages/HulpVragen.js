@@ -1,14 +1,12 @@
-import React from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
-import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import HulpVragenVac from "../components/HulpVragenVac";
-import SmallHeader from "../components/SmallHeader";
+import HulpVragenVac from "../components/Vacs/HulpVragenVac";
+import SmallHeader from "../components/SmallHeader/SmallHeader";
 import backgroundImage from './../assets/old-and-young-maptionnaire.jpeg'
-import {useState} from "react";
-import {useEffect} from "react";
 import axios from "axios";
+import Footer from "../components/Footer/Footer";
 
 function HulpVragen() {
     const {isAuth} = useContext(AuthContext);
@@ -97,6 +95,7 @@ function HulpVragen() {
                     )}
                 </section>
             </section>
+            <Footer/>
         </>
     )
 }

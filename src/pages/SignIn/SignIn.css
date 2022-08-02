@@ -1,4 +1,4 @@
-.form-container, .profile-container{
+.form-container, .profile-container, .gebruikers-page-form-container{
     display: flex;
     flex-direction: column;
     justify-content: center;

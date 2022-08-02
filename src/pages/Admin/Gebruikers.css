@@ -1,4 +1,15 @@
+.gebruikers-page{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+.gebruikers-page-form-container{
+    gap: 10px;
 
+}
 
 table, td, th {
     border: 1px solid #D84B1E;
@@ -22,5 +33,4 @@ td > img {
 table {
     border-collapse: collapse;
     width: 90%;
-    margin: 50px;
 }

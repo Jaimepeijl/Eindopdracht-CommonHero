@@ -2,12 +2,12 @@ import {useEffect} from "react";
 import axios from "axios";
 import {AuthContext} from "../context/AuthContext";
 import {useContext, useState} from "react";
-import HulpVragenVac from "../components/HulpVragenVac";
+import HulpVragenVac from "../components/Vacs/HulpVragenVac";
 import React from "react";
-import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
+import HulpAanbiedenVac from "../components/Vacs/HulpAanbiedenVac";
 import "./VacPage.css";
 import backgroundImage from "../assets/road-trip-with-raj-o4c2zoVhjSw-unsplash.jpeg";
-import SmallHeader from "../components/SmallHeader";
+import SmallHeader from "../components/SmallHeader/SmallHeader";
 import {useHistory} from "react-router-dom";
 
 function MijnVacs(){
@@ -56,7 +56,7 @@ function MijnVacs(){
 
         </SmallHeader>
         <div className="mijn-vacature-page">
-            <h1>Dit is een overzicht van jouw eigen vacatures</h1>
+            <h1>Dit is een overzicht van uw eigen vacatures</h1>
             <h2>Klik op een vacature om deze te verwijderen of te bewerken</h2>
         <div id="vacatures">
 

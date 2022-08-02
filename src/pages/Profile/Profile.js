@@ -1,9 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import SmallHeader from "../components/SmallHeader";
-import Footer from "../components/Footer";
-import {AuthContext} from "../context/AuthContext";
-import backgroundImage from "../assets/tk-qJDkJRTedNw-unsplash.jpg";
+import SmallHeader from "../../components/SmallHeader/SmallHeader";
+import Footer from "../../components/Footer/Footer";
+import {AuthContext} from "../../context/AuthContext";
+import backgroundImage from "../../assets/tk-qJDkJRTedNw-unsplash.jpg";
 import "./Profile.css";
 import React from "react";
 import {useHistory} from "react-router-dom";
@@ -132,9 +132,9 @@ function Profile(){
                             <section className="profile-pic">
                                 <img src={profilePic.url} alt={name}/>
                             </section>}
-                         <h1>{profilePic ? 'Wijzig' : 'Upload'} hieronder je profiel foto</h1>
+                         <h1>{profilePic ? 'Wijzig' : 'Upload'} hieronder uw profiel foto</h1>
                 <label htmlFor="user-image" className="user-image">
-                    Kies jouw afbeelding:
+                    Kies uw afbeelding:
                     <input type="file" name="image-field" id="user-image" onChange={handleImageChange}/>
                 </label>
                 {addSucces === true &&
@@ -143,9 +143,9 @@ function Profile(){
                 {/*Als er een preview url is, dan willen we deze in een afbeelding tonen*/}
                 {previewUrl &&
                     <label className="image-preview-container">
-                        <h1>Zo kom je eruit te zien:</h1>
+                        <h1>Zo komt u eruit te zien:</h1>
                         <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
-                        <h3>Ben jij soms fotomodel?</h3>
+                        <h3>Bent u soms fotomodel?</h3>
                     </label>
                 }
                         {!isPending && <button type="submit">Uploaden</button>}
@@ -211,12 +211,12 @@ function Profile(){
                                 </form>
 
                             </section>}
-                        <h4>Wil je jouw vacatures inzien, bewerken of verwijderen?</h4>
+                        <h4>Uw vacatures inzien, bewerken of verwijderen?</h4>
                         <button
                         className="button"
                         type="button"
                         onClick={() => history.push('/mijnvacs')}>
-                        Naar je vacature overzicht
+                        Naar uw vacature overzicht
                     </button>
 
                     </div>

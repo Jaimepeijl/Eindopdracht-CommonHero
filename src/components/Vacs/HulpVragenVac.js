@@ -14,13 +14,15 @@ const id = vacInfo.id;
                         <h1>
                             <Link to={{
                                     pathname: `/hulp-vragen/${id}`,
-                                    state: {id: {id}}
+                                    state: {id: {id},
+                                        vactype: "search"}
                                 }}>
                              {vacInfo.title}
                                 </Link>
                         </h1>
                         <h2>{vacInfo.publisher}, {vacInfo.city}</h2>
-                        <h3>{vacInfo.hours} uur </h3>
+                        <h3>{vacInfo.repeats}, {vacInfo.hours} uur </h3>
+                        {vacInfo.repeats === 'Eenmalig' && <h2>{vacInfo.date}</h2>}
                     </div>
                     <p>{vacInfo.description}</p>
 

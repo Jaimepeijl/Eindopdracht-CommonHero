@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
-import SmallHeader from "../components/SmallHeader";
+import SmallHeader from "../../components/SmallHeader/SmallHeader";
 import "./SignUp.css";
-import Footer from "../components/Footer";
-import backgroundImage from './../assets/ar-66uHNa7KFJ8-unsplash.jpg'
+import Footer from "../../components/Footer/Footer";
+import backgroundImage from '../../assets/ar-66uHNa7KFJ8-unsplash.jpg'
 import {useHistory} from "react-router-dom";
 import { useForm } from 'react-hook-form';
 

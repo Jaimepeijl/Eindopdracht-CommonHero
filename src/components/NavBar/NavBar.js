@@ -1,8 +1,8 @@
 import './NavBar.css'
 import React, {useContext} from 'react'
-import logo from './../assets/R1.png'
+import logo from '../../assets/R1.png'
 import {useHistory, Link, NavLink} from 'react-router-dom';
-import {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../../context/AuthContext";
 
 function NavBar(){
     const {isAuth, logOutFunction} = useContext(AuthContext);

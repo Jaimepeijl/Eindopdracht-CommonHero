@@ -3,10 +3,11 @@ import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import HulpAanbiedenVac from "../components/HulpAanbiedenVac";
-import SmallHeader from "../components/SmallHeader";
+import HulpAanbiedenVac from "../components/Vacs/HulpAanbiedenVac";
+import SmallHeader from "../components/SmallHeader/SmallHeader";
 import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
 import axios from "axios";
+import Footer from "../components/Footer/Footer";
 
 function HulpAanbieden() {
     const {isAuth} = useContext(AuthContext);
@@ -96,6 +97,7 @@ function HulpAanbieden() {
                     )}
                 </section>
             </section>
+            <Footer/>
         </>
     )
 }

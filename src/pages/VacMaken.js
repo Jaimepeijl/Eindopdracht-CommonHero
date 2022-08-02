@@ -1,19 +1,20 @@
 import "./VacMaken.css";
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import './Vacatures.css'
 import {AuthContext} from "../context/AuthContext";
-import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import SmallHeader from "../components/SmallHeader";
-import backgroundImage from './../assets/joseph-chan-zC7vO76hEqM-unsplash.jpg'
+import SmallHeader from "../components/SmallHeader/SmallHeader";
+import backgroundImage from './../assets/pexels-uriel-marques-3497522.jpeg'
 import axios from "axios";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer/Footer";
+import { useForm } from 'react-hook-form';
 
 function HulpAanbieden() {
     const {isAuth, user} = useContext(AuthContext);
     const history = useHistory();
     const [addSucces, toggleAddSuccess] = useState(false);
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
+    const {register, handleSubmit} = useForm();
 
     const [file, setFile] = useState([]);
     const [file2Big, setFile2Big] = useState('')
@@ -24,7 +25,10 @@ function HulpAanbieden() {
     const [uploaded, setUploaded] = useState(false)
     const [vacId, setVacId] = useState(null);
     const [title, setTitle] = useState('');
+    const [repeats, setRepeats] = useState('DNR')
+    const [date, setDate] = useState('00000000')
     const [hours, setHours] = useState(1);
+    const [city, setCity] = useState('')
     const [vactype, setVacType] = useState('');
     const [description, setDescription] = useState('');
 
@@ -34,17 +38,19 @@ function HulpAanbieden() {
         else {history.push('/hulp-aanbieden')}
     }
 
-    async function createOfferVacancy(e){
-        e.preventDefault();
-        console.log(title, hours, description);
+    async function createOfferVacancy(data){
+        console.log(data);
         setVacType('offer')
 
         try{
             const response = await axios.post('http://localhost:8080/vacancies/offer', {
                 publisher: user.username,
-                title:  title,
-                hours: hours,
-                description: description,
+                title:  data.title,
+                hours: data.hours,
+                city: data.city,
+                description: data.description,
+                repeats: data.repeats,
+                date: data.date,
             });
             console.log(response.data.id)
             setVacId(response.data.id)
@@ -55,17 +61,19 @@ function HulpAanbieden() {
             console.error(e)
         }
     }
-    async function createSearchVacancy(e){
-        e.preventDefault();
-        console.log(title, hours, vactype, description);
+    async function createSearchVacancy(data){
+        console.log(data);
         setVacType('search')
 
         try{
             const response = await axios.post('http://localhost:8080/vacancies/search', {
                 publisher: user.username,
-                title:  title,
-                hours: hours,
-                description: description,
+                title:  data.title,
+                hours: data.hours,
+                city: data.city,
+                description: data.description,
+                repeats: data.repeats,
+                date: data.date,
             });
             console.log(response.data.id)
             setVacId(response.data.id)
@@ -112,7 +120,7 @@ function HulpAanbieden() {
     return(
         <>
             <SmallHeader
-                backgroundImage={backgroundImage} title="spiderman with kids" height={'100vh'}>
+                backgroundImage={backgroundImage} title="Captain America cleaning windows" height={'120vh'}>
                 {!isAuth &&
                 <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
@@ -177,43 +185,68 @@ function HulpAanbieden() {
                                 onClick={() =>setVacType('offer')}>Ik bied hulp aan</button>
                             </div>}
                             {vactype === 'offer' &&
-                        <form className="hulpForm" onSubmit={createOfferVacancy}>
+                        <form className="hulpForm" onSubmit={handleSubmit(createOfferVacancy)}>
                             <h1>Wilt u een vacature plaatsen?</h1>
                             <h2>Vul hieronder de velden in</h2>
                             <input
                                 type="hidden"
                                 id="publisher"
-                                name="publisher"
-                                value={publisher}/>
+                                {...register("publisher")}/>
                             <label htmlFor="title">
                                 <p>Titel:</p>
                                 <input
                                     type="text"
                                     id="title"
-                                    name="title"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}/>
+                                    placeholder="Bijv: Timmerhulp aangeboden"
+                                    {...register("title", {required: true, maxLength: 50})}/>
                             </label>
+                            <div>
+                                <label htmlFor="repeats"><p>Wilt u vaker dan eens hulp aanbieden?:</p></label>
+                                <select id="repeats" {...register("repeats")}>
+                                    <option value="Eenmalig">Nee, eenmalig</option>
+                                    <option value="Dagelijks">Dagelijks</option>
+                                    <option value="Wekelijks">Wekelijks</option>
+                                    <option value="Maandelijks">Maandelijks</option>
+                                </select>
+                            </div>
+                            {repeats === 'Eenmalig' &&
+                                <label htmlFor="date">
+                                    <p>Op / vanaf datum:</p>
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        {...register("date")}
+                                        min="2022-08-01"
+                                        max="2024-08-01"
+                                    /></label>
+                            }
                             <label htmlFor="hours">
-                                <p>Aantal uren (tussen 1 en 5):</p>
+                                <p>Aantal uren (tussen 1 en 8):</p>
                                 <input
                                     type="number"
                                     id="hours"
-                                    name="hours"
+                                    {...register("hours")}
                                     min="1"
-                                    max="5"
-                                    value={hours}
-                                    onChange={(e) => setHours(e.target.value)}/>
+                                    max="8"
+                                />
                             </label>
-                            <label htmlFor="Samenvatting:">
+                            <label htmlFor="city">
+                                <p>In welke stad wilt u hulp aanbieden:</p>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    placeholder="Bijv: Noordwijk aan Zee"
+                                    {...register("city", {required: true, maxLength: 50})}
+                                    />
+                            </label>
+                            <label htmlFor="description:">
                                 <p>Bericht:</p>
                                 <textarea
-                                    name="message"
-                                    className="samenvatting"
+                                    className="description"
                                     rows="10" cols="30"
-                                    placeholder="Wat zoek je precies?:"
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}/>
+                                    placeholder="Leg kort uit waar u bij kunt helpen:"
+                                    {...register("description", {required: true, maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
+
                             </label>
 
                             {!isPending && <button
@@ -224,7 +257,7 @@ function HulpAanbieden() {
                             {isPending && <h3>Aan het laden!</h3>}
                         </form>}
                             {vactype === 'search' &&
-                                <form className="hulpForm" onSubmit={createSearchVacancy}>
+                                <form className="hulpForm" onSubmit={handleSubmit(createSearchVacancy)}>
                                     <h1>Wilt u een vacature plaatsen?</h1>
                                     <h2>Vul hieronder de velden in</h2>
                                     <input
@@ -237,31 +270,59 @@ function HulpAanbieden() {
                                         <input
                                             type="text"
                                             id="title"
-                                            name="title"
-                                            value={title}
-                                            onChange={(e) => setTitle(e.target.value)}/>
+                                            placeholder="Bijv: Gezocht: brunch maatje!"
+                                            {...register("title", {required: true, maxLength: 50})}/>
                                     </label>
+                                    <div>
+                                        <label htmlFor="repeats"><p>Heeft u deze hulp vaker nodig?:</p></label>
+                                        <select id="repeats" {...register("repeats")}>
+                                            <option value="Eenmalig">Nee, eenmalig</option>
+                                            <option value="Dagelijks">Dagelijks</option>
+                                            <option value="Wekelijks">Wekelijks</option>
+                                            <option value="Maandelijks">Maandelijks</option>
+                                        </select>
+                                    </div>
+                                    {repeats === 'Eenmalig' &&
+                                        <label htmlFor="date">
+                                            <p>Op / vanaf datum:</p>
+                                            <input
+                                                type="date"
+                                                id="date"
+                                                // onChange={(date) => {
+                                                //     onChange(date?.isValid ? date : "");
+                                                // }}
+                                                // format={language === "en" ? "MM/DD/YYYY" : "YYYY/MM/DD"}
+                                                {...register("date")}
+                                                min="2022-08-01"
+                                                max="2024-08-01"
+                                            /></label>
+                                    }
                                     <label htmlFor="hours">
-                                        <p>Aantal uren (tussen 1 en 5):</p>
+                                        <p>Aantal uren (tussen 1 en 8):</p>
                                         <input
                                             type="number"
                                             id="hours"
-                                            name="hours"
+                                            {...register("hours")}
                                             min="1"
-                                            max="5"
-                                            value={hours}
-                                            onChange={(e) => setHours(e.target.value)}/>
+                                            max="8"
+                                        />
                                     </label>
-
-                                    <label htmlFor="Samenvatting:">
+                                    <label htmlFor="city">
+                                        <p>In welke stad zoekt u hulp:</p>
+                                        <input
+                                            type="text"
+                                            id="city"
+                                            placeholder="Bijv: Zaandam"
+                                            {...register("city", {required: true, maxLength: 50})}/>
+                                    </label>
+                                    <label htmlFor="description:">
                                         <p>Bericht:</p>
                                         <textarea
                                             name="message"
-                                            className="samenvatting"
-                                            rows="10" cols="30"
-                                            placeholder="Wat zoek je precies?:"
-                                            value={description}
-                                            onChange={(e) => setDescription(e.target.value)}/>
+                                            className="description"
+                                            rows="10"
+                                            placeholder="Waar zoekt u precies hulp bij?"
+                                            {...register("description", {required: true, maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
                                     </label>
                                     {!isPending && <button
                                         type="submit"

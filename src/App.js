@@ -1,18 +1,17 @@
 import React from 'react';
 import {Switch, Route} from "react-router-dom";
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar/NavBar';
 import Home from './pages/Home';
-import Profile from './pages/Profile'
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
+import Profile from './pages/Profile/Profile'
+import SignIn from './pages/SignIn/SignIn';
+import SignUp from './pages/Signup/SignUp';
 import './App.css';
 import HulpVragen from "./pages/HulpVragen";
 import HulpAanbieden from "./pages/HulpAanbieden";
-import Gebruikers from "./pages/Gebruikers";
+import Gebruikers from "./pages/Admin/Gebruikers";
 import VacMaken from "./pages/VacMaken";
-import VacOfferPage from "./pages/VacOfferPage";
-import VacSearchPage from "./pages/VacSearchPage";
 import MijnVacs from "./pages/MijnVacs";
+import SingleVacPage from "./pages/SingleVacPage";
 
 
 function App() {
@@ -54,12 +53,8 @@ function App() {
                       <VacMaken/>
                   </Route>
                   <Route
-                      exact path="/hulp-aanbieden/:offerId" component={VacOfferPage}>
-                      <VacOfferPage/>
-                  </Route>
-                  <Route
-                      exact path="/hulp-vragen/:searchId" component={VacSearchPage}>
-                      <VacSearchPage/>
+                      exact path="/:vactype/:Id" component={SingleVacPage}>
+                      <SingleVacPage/>
                   </Route>
                   <Route
                       exact path="/mijnvacs">

@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {useForm} from "react-hook-form";
-import {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../../context/AuthContext";
 import {useState} from "react";
 import "./SignIn.css";
-import Footer from "../components/Footer";
-import SmallHeader from "../components/SmallHeader";
-import backgroundImage from './../assets/tim-mossholder-9ulzDarOwEI-unsplash.jpg'
+import Footer from "../../components/Footer/Footer";
+import SmallHeader from "../../components/SmallHeader/SmallHeader";
+import backgroundImage from '../../assets/tim-mossholder-9ulzDarOwEI-unsplash.jpg'
 import axios from "axios";
 
 function SignIn(){
