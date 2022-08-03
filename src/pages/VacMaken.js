@@ -1,6 +1,6 @@
 import "./VacMaken.css";
-import React, {useState, useContext} from 'react'
-import './Vacatures.css'
+import React, {useState, useContext} from 'react';
+import './Vacatures.css';
 import {AuthContext} from "../context/AuthContext";
 import {useHistory} from "react-router-dom";
 import SmallHeader from "../components/SmallHeader/SmallHeader";
@@ -24,16 +24,11 @@ function HulpAanbieden() {
     const [publisher, setPublisher] = useState('');
     const [uploaded, setUploaded] = useState(false)
     const [vacId, setVacId] = useState(null);
-    const [title, setTitle] = useState('');
-    const [repeats, setRepeats] = useState('DNR')
-    const [date, setDate] = useState('00000000')
-    const [hours, setHours] = useState(1);
-    const [city, setCity] = useState('')
     const [vactype, setVacType] = useState('');
-    const [description, setDescription] = useState('');
+    const current = new Date();
+    const currentDate = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 
-
-    function button (){
+function button (){
         if(vactype === 'search'){history.push('/hulp-vragen')}
         else {history.push('/hulp-aanbieden')}
     }
@@ -51,6 +46,12 @@ function HulpAanbieden() {
                 description: data.description,
                 repeats: data.repeats,
                 date: data.date,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                },
             });
             console.log(response.data.id)
             setVacId(response.data.id)
@@ -74,7 +75,13 @@ function HulpAanbieden() {
                 description: data.description,
                 repeats: data.repeats,
                 date: data.date,
-            });
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
             console.log(response.data.id)
             setVacId(response.data.id)
             toggleAddSuccess(true);
@@ -116,7 +123,6 @@ function HulpAanbieden() {
         }
     }
 
-
     return(
         <>
             <SmallHeader
@@ -138,7 +144,6 @@ function HulpAanbieden() {
                         <>
                             <div className="login-form">
                             <h1>Je vacature is aangemaakt!</h1>
-
                         </div>
                             <section className="image-container">
                                 <h2>Je kunt ook nog een afbeelding toevoegen!</h2>
@@ -151,7 +156,6 @@ function HulpAanbieden() {
                                     <label className="image-preview-container">
                                     <h1>Zo komt de foto eruit te zien:</h1>
                                     <img src={previewUrl} alt="Voorbeeld van de afbeelding die zojuist gekozen is" className="image-preview"/>
-
                                 </label>
                                     {!uploaded && <button
                                 type="button"
@@ -163,7 +167,6 @@ function HulpAanbieden() {
                                 </div>
                             }
                             </section>
-
                         <button
                         type="button"
                         className="submit-button"
@@ -173,7 +176,6 @@ function HulpAanbieden() {
                         </button>
                         </>}
                     {!addSucces === true &&
-
                         <section>
                             {vactype === '' &&
                             <div><h1>Wat voor vacature wil je aanmaken?</h1>
@@ -209,17 +211,16 @@ function HulpAanbieden() {
                                     <option value="Maandelijks">Maandelijks</option>
                                 </select>
                             </div>
-                            {repeats === 'Eenmalig' &&
                                 <label htmlFor="date">
                                     <p>Op / vanaf datum:</p>
                                     <input
                                         type="date"
                                         id="date"
                                         {...register("date")}
-                                        min="2022-08-01"
+                                        min={currentDate}
                                         max="2024-08-01"
-                                    /></label>
-                            }
+                                    />
+                                </label>
                             <label htmlFor="hours">
                                 <p>Aantal uren (tussen 1 en 8):</p>
                                 <input
@@ -246,9 +247,7 @@ function HulpAanbieden() {
                                     rows="10" cols="30"
                                     placeholder="Leg kort uit waar u bij kunt helpen:"
                                     {...register("description", {required: true, maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
-
                             </label>
-
                             {!isPending && <button
                                 type="submit"
                                 className="submit-button">
@@ -282,21 +281,16 @@ function HulpAanbieden() {
                                             <option value="Maandelijks">Maandelijks</option>
                                         </select>
                                     </div>
-                                    {repeats === 'Eenmalig' &&
                                         <label htmlFor="date">
-                                            <p>Op / vanaf datum:</p>
-                                            <input
-                                                type="date"
-                                                id="date"
-                                                // onChange={(date) => {
-                                                //     onChange(date?.isValid ? date : "");
-                                                // }}
-                                                // format={language === "en" ? "MM/DD/YYYY" : "YYYY/MM/DD"}
-                                                {...register("date")}
-                                                min="2022-08-01"
-                                                max="2024-08-01"
-                                            /></label>
-                                    }
+                                        <p>Op / vanaf datum:</p>
+                                        <input
+                                            type="date"
+                                            id="date"
+                                            {...register("date")}
+                                            min={currentDate}
+                                            max="2024-08-01"
+                                        />
+                                        </label>
                                     <label htmlFor="hours">
                                         <p>Aantal uren (tussen 1 en 8):</p>
                                         <input
@@ -324,11 +318,12 @@ function HulpAanbieden() {
                                             placeholder="Waar zoekt u precies hulp bij?"
                                             {...register("description", {required: true, maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
                                     </label>
-                                    {!isPending && <button
+                                    {!isPending &&
+                                        <button
                                         type="submit"
                                         className="submit-button">
                                         Plaats de vacature!
-                                    </button>}
+                                        </button>}
                                     {isPending && <h3>Aan het laden!</h3>}
                                 </form>}
                         </section>}

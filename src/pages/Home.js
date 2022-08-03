@@ -96,7 +96,7 @@ function Home() {
                         {vacSearchInfo && vacSearchInfo.map((info)=>{
                             console.log(vacSearchInfo)
                             return (
-                                <HulpAanbiedenVac vacInfo={info} key={info.title}/>
+                                <HulpVragenVac vacInfo={info} key={info.title}/>
                             )
                         })}
                     </section>
@@ -111,7 +111,7 @@ function Home() {
                         <img src={party} alt="superhero-icon"/>
                         <h1>Samen Staan We Sterk!</h1>
                         <p>
-                            Met alle problemen van vandaag zoekt CommonHero naar de oplossingen samen met iedereen die mee wilt doen. Iedereen kan voor iemand anders een held zijn.
+                            Met alle problemen van vandaag zoekt CommonHero naar de oplossingen samen met iedereen die mee wilt doen. Iedereen is uniek en heeft weer een unieke skill en unieke interesses. Door die te gebruiken op de juiste plek, maken vele handen echt licht werk. Iedereen kan voor iemand een held zijn!
                         </p>
                     </article>
                     <article>
@@ -141,14 +141,14 @@ function Home() {
                     <article>
                         <img src={plant} alt="plant-icon"/>
                         <h1>Doe Wat Je Leuk Vind!</h1>
-                        <p>Heb jij een passie en vind je het leuk om daarmee mensen te helpen? Laat het ons weten en bied je hulp aan. Dit kan alles zijn van tuinieren, computeren, timmeren, auto rijden tot koken.
+                        <p>Heb jij een passie en vind je het leuk om daarmee mensen te helpen? Of doe je een opleiding en wil je alvast wat ervaring opdoen in die richting? Laat het ons weten en bied je hulp aan. Dit kan alles zijn van tuinieren, computeren, timmeren, auto rijden tot koken.
 
                         </p>
                     </article>
                     <article>
                         <img src={friends} alt="friends-icon"/>
                         <h1>Maak Vrienden!</h1>
-                        <p>Als je mensen helpt ontmoet je vaak nieuwe vrienden. Is dat niet het mooiste wat er is? Er zijn enorm veel eenzame mensen in Nederland die een nieuwe vriend of vriendin kunnen gebruiken. Het kan soms moeilijk zijn om die te vinden.
+                        <p>Als je mensen helpt, ontmoet je vaak nieuwe vrienden. Is dat niet het mooiste wat er is? Er zijn enorm veel eenzame mensen in Nederland die een nieuwe vriend of vriendin kunnen gebruiken. Het kan soms moeilijk zijn om die te vinden.
                         Help jij mee?</p>
                     </article>
                 </section>

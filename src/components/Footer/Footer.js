@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import "./Footer.css"
-import logo from '../../assets/R1.png'
+import "./Footer.css";
+import logo from '../../assets/R1.png';
 
 function Footer (){
     return(
@@ -18,7 +18,6 @@ function Footer (){
             </Link>
             </span>
             </section>
-
         </>
     )
 }

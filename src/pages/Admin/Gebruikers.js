@@ -1,12 +1,14 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import axios from "axios";
 import SmallHeader from "../../components/SmallHeader/SmallHeader";
 import backgroundImage from "../../assets/clark-tibbs-oqStl2L5oxI-unsplash.jpg";
-import "./Gebruikers.css"
+import "./Gebruikers.css";
 import Footer from "../../components/Footer/Footer";
+import {AuthContext} from "../../context/AuthContext";
 
 function Gebruikers(){
     const token = localStorage.getItem('token');
+    const {isAuth} = useContext(AuthContext);
 
     const [users, setUsers] = useState([]);
     const [username, setUsername] = useState('');
@@ -28,40 +30,46 @@ function Gebruikers(){
         }
         fetchUsers();
     }, []);
+
     async function getAuthorities(e){
         toggleButton(true)
         console.log(authority)
         e.preventDefault();
         console.log(username)
         try {
-            const response = await axios.get(`http://localhost:8080/gebruikers/${username}/authorities`);
+            const response = await axios.get(`http://localhost:8080/gebruikers/${username}/authorities`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+            },
+        });
             console.log(response.data)
             setUserInfo(response.data)
-            console.log(userInfo)
+            console.log(userInfo[0].authority)
             setInputUsername(response.data[0].username)
-            setAuthority(userInfo.authority);
+            console.log(username)
+            setAuthority(userInfo[0].authority);
             console.log(authority)
-
-
         } catch (e) {
             console.error(e)
         } adjustAuthority();
     }
     function adjustAuthority(){
-        if(authority === 'USER'){
-            setNewAuthority('ADMIN')
+        if(authority === "USER"){
+            setNewAuthority("ADMIN")
         }
-        else if(authority === 'ROLE_USER'){
-            setNewAuthority('ADMIN')
+        else if(authority === "ROLE_USER"){
+            setNewAuthority("ADMIN")
         }
-        else if (authority === 'ROLE_ADMIN'){
-            setNewAuthority('USER')
+        else if (authority === "ROLE_ADMIN"){
+            setNewAuthority("USER")
         }
         else if (!authority){
-            setNewAuthority('USER')
+            setNewAuthority("USER")
         }
         else {
-            setNewAuthority('USER')
+            setNewAuthority("USER")
         }
     }
     async function toggleAuthorities(){
@@ -69,7 +77,13 @@ function Gebruikers(){
         console.log(username)
         console.log(newAuthority)
         try {
-            const response = await axios.post(`http://localhost:8080/gebruikers/${username}/authorities/${newAuthority}`);
+            const response = await axios.post(`http://localhost:8080/gebruikers/${username}/authorities/${newAuthority}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
             console.log(response)
         } catch (e) {
             console.error(e)
@@ -79,7 +93,13 @@ function Gebruikers(){
         console.log(authority)
         console.log(newAuthority)
         try {
-            const response = await axios.delete(`http://localhost:8080/gebruikers/${username}/authorities/${authority}`);
+            const response = await axios.delete(`http://localhost:8080/gebruikers/${username}/authorities/${authority}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                })
             console.log(response)
         } catch (e) {
             console.error(e)
@@ -88,8 +108,8 @@ function Gebruikers(){
 return(
  <>
      <SmallHeader backgroundImage={backgroundImage} title="Do Something Great" height={'80vh'}>
-
      </SmallHeader>
+     {isAuth &&
      <div className="gebruikers-page">
          <h1>De Admin Gebruikerspagina</h1>
          <section>
@@ -108,7 +128,6 @@ return(
                  type="submit">
                  Klik hier om de gegevens op te halen
              </button>
-
              {button && <div>
                  <h3>Gebruikersnaam: </h3>
                  <p>{inputUsername}</p>
@@ -131,7 +150,6 @@ return(
          >
              Verwijderen
          </button>}
-
      </section>
          <h1>Alle gebruikers</h1>
      <table>
@@ -163,8 +181,7 @@ return(
          })}
          </tbody>
      </table>
-
-     </div>
+     </div>}
      <Footer/>
 
  </>

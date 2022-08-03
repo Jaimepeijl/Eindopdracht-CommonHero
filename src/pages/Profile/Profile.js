@@ -86,8 +86,7 @@ function Profile(){
         }
     }
 
-    async function updateProfile(e){
-        // e.preventDefault();
+    async function updateProfile(){
         console.log(newName, newEmail, username, newCity);
         try {
             const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
@@ -100,7 +99,7 @@ function Profile(){
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 }
-            })
+            });
             console.log(result.data)
         } catch (e) {
             console.error(e)
@@ -140,7 +139,6 @@ function Profile(){
                 {addSucces === true &&
                     <h2>Afbeelding is toegevoegd!</h2>
                 }
-                {/*Als er een preview url is, dan willen we deze in een afbeelding tonen*/}
                 {previewUrl &&
                     <label className="image-preview-container">
                         <h1>Zo komt u eruit te zien:</h1>

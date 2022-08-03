@@ -1,5 +1,5 @@
 import React from "react";
-import "./SmallHeader.css"
+import "./SmallHeader.css";
 
 function SmallHeader ({backgroundImage, height, children}){
     return(

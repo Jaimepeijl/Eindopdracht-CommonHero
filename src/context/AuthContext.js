@@ -35,7 +35,7 @@ function AuthContextProvider({children}){
                             email:response.data.email,
                         },
                         status: 'done'
-                    })
+                    });
                 } catch (e) {
                     toggleAuth({
                         ...auth,
@@ -82,14 +82,12 @@ function AuthContextProvider({children}){
         history.push('/')
         console.log("Gebruiker is uitgelogd!")
     }
-
     const contextData = {
         isAuth: auth.isAuth,
         user: auth.user,
         logInFunction: logIn,
         logOutFunction: logOut,
     }
-
     return (
         <AuthContext.Provider value={contextData}>
             {auth.status === "done" && children}

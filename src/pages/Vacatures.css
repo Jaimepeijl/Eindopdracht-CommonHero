@@ -7,7 +7,7 @@
     flex-basis: 200px;
     padding: 16px;
     margin: 16px;
-    box-shadow: 6px 3px 18px #00000080;
+    box-shadow: 5px 5px 6px #00000060;
 }
 .HulpVragen, .HulpZoeken h1{
     padding: 10px;
@@ -32,7 +32,7 @@ a:visited, a:hover {
 
 .vacature-container, .vacature-section{
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(187,187,187,1) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(230,200,191,1) 100%);
 }
 .vacature-section{
     padding: 20px;
