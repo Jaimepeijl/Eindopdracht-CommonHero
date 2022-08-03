@@ -1,0 +1,31 @@
+.hulpFormHeader{
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    margin: 50px;
+}
+.hulpForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: start;
+}
+.vactype-container ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 15px;
+    border: #D84B1E 1px solid;
+}
+.description{
+    width: 100%;
+}
+.add-image{
+    margin: 10px;
+}
+.image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #D84B1E;
+}

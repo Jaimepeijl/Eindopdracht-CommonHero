@@ -1,19 +1,53 @@
-import React from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import './Vacatures.css'
-import Header from "../components/Header";
 import {AuthContext} from "../context/AuthContext";
-import {useContext} from "react";
 import {useHistory} from "react-router-dom";
-import HulpVragenVac from "../components/HulpVragenVac";
+import HulpVragenVac from "../components/Vacs/HulpVragenVac";
+import SmallHeader from "../components/SmallHeader/SmallHeader";
+import backgroundImage from './../assets/old-and-young-maptionnaire.jpeg'
+import axios from "axios";
+import Footer from "../components/Footer/Footer";
 
 function HulpVragen() {
-    const {isLoggedIn, logOutFunction} = useContext(AuthContext);
+    const {isAuth} = useContext(AuthContext);
     const history = useHistory();
+    const [vacInfo, setVacInfo] = useState([])
+
+    const [searchInput, setSearchInput] = useState('')
+    const [filteredResults, setFilteredResults] = useState([])
+
+    const searchItems = (searchValue) => {
+        setSearchInput(searchValue)
+        if(searchInput !== ''){
+            const filteredVacInfo = vacInfo.filter((info) => {
+                return Object.values(info).join('').toLowerCase().includes(searchInput.toLowerCase())
+            })
+            setFilteredResults(filteredVacInfo)
+        }
+        else{
+            setFilteredResults(vacInfo)
+        }
+    }
+
+    useEffect(()=> {
+        async function getVacancies() {
+            try {
+                const response = await axios.get('http://localhost:8080/vacancies/search')
+                setVacInfo(response.data)
+                console.log(vacInfo)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        getVacancies();
+    }, []);
 
     return(
         <>
-            <Header>
-                {!isLoggedIn && <section className="welcome">
+            <SmallHeader
+                backgroundImage={backgroundImage} title="people playing chess">
+                {!isAuth &&
+                    <section className="welcome">
                     <h1>Welkom bij CommonHero</h1>
                     <h2>Ben je nieuw? Meld je dan hieronder aan!</h2>
                     <button
@@ -24,43 +58,44 @@ function HulpVragen() {
                     </button>
                 </section>
                 }
-                {isLoggedIn && <section className="hulpFormHeader">
-                    <h1>Heeft u ergens hulp bij nodig?</h1>
-                    <h2>Vul hieronder de velden in</h2>
-                    <form type="submit" className="hulpForm">
-                        <label htmlFor="username">Gebruikersnaam:</label>
-                        <input type="text" id="username" name="username"/>
-                        <label htmlFor="title">Titel:</label>
-                        <input type="text" id="title" name="title"/>
-                        <textarea name="message" rows="10" cols="30" value="Samenvatting:">
-                        </textarea>
-                    </form>
-                </section>
+                {isAuth &&
+                    <section className="welcome">
+                        <h1>Wilt u een vacature plaatsen?</h1>
+                        <h2>Klik dan op onderstaande knop</h2>
+                        <button
+                            type="button"
+                            onClick={() => history.push('/vacmaken')}>
+                            Gelijk een vacature maken
+                        </button>
+                    </section>
                 }
-            </Header>
+            </SmallHeader>
             <section className="vacature-section">
                 <form className="search">
-                    <h2>Hier komt een zoek dingetje met filters enzo</h2>
-                    <input type="radio" id="stad" name="stad"/><label htmlFor="stad">In welke stad zoek je iets?</label>
-                    <textarea name="message" rows="3" cols="30" value="preferences">
-                    Heb je bepaalde voorkeuren?
-                    </textarea>
-                    <p>blablabla etc.etc.etc</p>
+                    <h2>Wat zoek je precies?</h2>
+                    <input type='search'
+                           placeholder='Ik zoek...'
+                           onChange={(e)=> searchItems(e.target.value)}
+                    />
                 </form>
 
                 <section className="vacatures">
-            <HulpVragenVac
-                title="vervoer gezocht voor oude mevrouw"
-                username="Mevr. de Vries"
-                summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
-            />
-            <HulpVragenVac
-                title="vervoer gezocht voor oude mevrouw"
-                username="Mevr. de Vries"
-                summary="Oudere mevrouw zou dolgraag naar de verjaardag van haar dochter willen in Dordrecht maar heeft geen vervoer"
-            />
-        </section>
-        </section>
+                    {searchInput.length > 1 ? (
+                        filteredResults.map((info) => {
+                            return (
+                                <HulpVragenVac vacInfo={info} key={info.title}/>
+                            )
+                        })
+                    ) : (
+                        vacInfo.map((info) => {
+                            return (
+                                <HulpVragenVac vacInfo={info} key={info.title}/>
+                            )
+                        })
+                    )}
+                </section>
+            </section>
+            <Footer/>
         </>
     )
 }
