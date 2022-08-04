@@ -84,7 +84,6 @@ function SignUp(){
                     Wachtwoord (minimaal 8 karakters):
                     <input
                         type="password"
-
                         id="pass"
                         {...register("password", {
                             required: "Je moet natuurlijk wel een wachtwoord hebben!",

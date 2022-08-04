@@ -14,7 +14,7 @@ function HulpAanbieden() {
     const history = useHistory();
     const [addSucces, toggleAddSuccess] = useState(false);
     const token = localStorage.getItem('token');
-    const {register, handleSubmit} = useForm();
+    const { register, handleSubmit, formState: { errors },} = useForm();
 
     const [file, setFile] = useState([]);
     const [file2Big, setFile2Big] = useState('')
@@ -200,8 +200,9 @@ function button (){
                                     type="text"
                                     id="title"
                                     placeholder="Bijv: Timmerhulp aangeboden"
-                                    {...register("title", {required: true, maxLength: 50})}/>
+                                    {...register("title", {required: "Je hebt natuurlijk wel een titel nodig!", maxLength: 50})}/>
                             </label>
+                            {errors.title && <p className="error-message">{errors.title.message}</p>}
                             <div>
                                 <label htmlFor="repeats"><p>Wilt u vaker dan eens hulp aanbieden?:</p></label>
                                 <select id="repeats" {...register("repeats")}>
@@ -226,28 +227,31 @@ function button (){
                                 <input
                                     type="number"
                                     id="hours"
-                                    {...register("hours")}
+                                    {...register("hours", {required: "Hoeveel uur zal het (ongeveer) duren?"})}
                                     min="1"
                                     max="8"
                                 />
                             </label>
+                            {errors.hours && <p className="error-message">{errors.hours.message}</p>}
                             <label htmlFor="city">
                                 <p>In welke stad wilt u hulp aanbieden:</p>
                                 <input
                                     type="text"
                                     id="city"
                                     placeholder="Bijv: Noordwijk aan Zee"
-                                    {...register("city", {required: true, maxLength: 50})}
+                                    {...register("city", {required: "We moeten natuurlijk wel weten waar je hulp nodig hebt!", maxLength: 50})}
                                     />
                             </label>
+                            {errors.city && <p className="error-message">{errors.city.message}</p>}
                             <label htmlFor="description:">
                                 <p>Bericht:</p>
                                 <textarea
                                     className="description"
                                     rows="10" cols="30"
                                     placeholder="Leg kort uit waar u bij kunt helpen:"
-                                    {...register("description", {required: true, maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
+                                    {...register("description", {required: "Leg kort uit waar je hulp bij nodig hebt", maxLength: { value: 255, message: "Maximaal 255 karakters aub"},})}/>
                             </label>
+                            {errors.description && <p className="error-message">{errors.description.message}</p>}
                             {!isPending && <button
                                 type="submit"
                                 className="submit-button">

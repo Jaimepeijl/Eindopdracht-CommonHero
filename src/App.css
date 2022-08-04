@@ -22,14 +22,19 @@ h3{
 p{
     font-size: 18px;
 }
+.error-message{
+    color: red;
+}
 /*3.Layout--------------*/
 
 /*4.Areas---------------*/
 .welcome{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.7);
+    margin: 50px 50px;
     border-radius: 2px;
     padding: 25px;
 }
@@ -58,9 +63,6 @@ header h1, h1 {
     font-size: 36px;
     color: #D84B1E;
 }
-.HeaderLogo img{
-    max-width: 700px;
-}
 
 body{
     text-align: center;
@@ -70,9 +72,6 @@ body{
     z-index: 1;
     border-bottom: 50px solid white;
     border-right: 100vw solid transparent;
-}
-Header .line1{
-    margin-top: 200px;
 }
 .line2{
     border-bottom: 50px solid black;

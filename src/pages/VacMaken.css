@@ -9,6 +9,9 @@
     gap: 10px;
     text-align: start;
 }
+.error-message{
+    color: red;
+}
 .vactype-container ul{
     width: 100%;
     display: flex;
