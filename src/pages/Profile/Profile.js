@@ -61,7 +61,7 @@ function Profile(){
         setPreviewUrl(URL.createObjectURL(uploadedFile));
     }
 
-    async function sendImage(e){
+    async function sendImage(){
         setIsPending(true)
         const formData = new FormData();
         formData.append("file", file);
@@ -82,12 +82,21 @@ function Profile(){
     }
 
     async function updateProfile(){
+        if (newEmail !== ''){
+            setEmail(newEmail)
+        }
+        if (newName !== ''){
+            setName(newName.name)
+        }
+        if (newCity !== ''){
+            setCity(newCity)
+        }
         try {
             const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
                 username: username,
-                email: newEmail,
-                name: newName,
-                city: newCity,
+                email: email,
+                name: name,
+                city: city,
             }, {
                 headers: {
                     "Content-Type": "application/json",

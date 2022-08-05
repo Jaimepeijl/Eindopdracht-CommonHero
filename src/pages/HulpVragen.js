@@ -22,23 +22,17 @@ function HulpVragen() {
     const [hourSort, setHourSort] = useState("Laag naar hoog");
 
     useEffect(()=>{
-        console.log(searchInput, city)
         if(searchInput !== '' && city === ''){
-            console.log("nu is die bij searchInput")
-            console.log(searchInput)
             const filteredVacInfo = vacInfo.filter((info) => {
                 return Object.values(info).join('').toLowerCase().includes(searchInput.toLowerCase())
             })
             setFilteredResults(filteredVacInfo)
         } else if (searchInput === '' && city !== '') {
-            console.log("nu is die bij city")
-            console.log(city)
             const filteredVacInfo = vacInfo.filter((info) => {
                 return Object.values(info.city).join('').toLowerCase().includes(city.toLowerCase())
             })
             setFilteredResults(filteredVacInfo)
         } else {
-            console.log("nu is die nergens")
             setFilteredResults(vacInfo)
             setCity('')
             setSearchInput('')
@@ -51,7 +45,6 @@ function HulpVragen() {
             try {
                 const response = await axios.get('http://localhost:8080/vacancies/search')
                 setVacInfo(response.data)
-                console.log(vacInfo)
             } catch (e) {
                 console.error(e)
             }
@@ -82,7 +75,6 @@ function HulpVragen() {
             setHourSort("Laag naar hoog")
         }
     };
-
     const sortByDate = () => {
         toggleSorted(true)
         if (dateSort === "Laag naar hoog") {

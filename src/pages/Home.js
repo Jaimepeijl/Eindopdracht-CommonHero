@@ -27,7 +27,6 @@ function Home() {
             try {
                 const response = await axios.get('http://localhost:8080/vacancies/offer')
                 setVacOfferInfo(response.data)
-                console.log(vacOfferInfo)
             } catch (e) {
                 console.error(e)
             }
@@ -39,7 +38,6 @@ function Home() {
             try {
                 const response = await axios.get('http://localhost:8080/vacancies/search')
                 setVacSearchInfo(response.data)
-                console.log(vacSearchInfo)
             } catch (e) {
                 console.error(e)
             }
@@ -83,7 +81,6 @@ function Home() {
                     <h2>Hulp Aangeboden</h2>
                     <section className="vacatures">
                         {vacOfferInfo && vacOfferInfo.map((info)=>{
-                            console.log(vacOfferInfo)
                             return (
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>
                             )
@@ -94,7 +91,6 @@ function Home() {
                     <h2>Hulp Gezocht</h2>
                     <section className="vacatures">
                         {vacSearchInfo && vacSearchInfo.map((info)=>{
-                            console.log(vacSearchInfo)
                             return (
                                 <HulpVragenVac vacInfo={info} key={info.title}/>
                             )

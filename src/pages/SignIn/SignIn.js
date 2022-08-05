@@ -15,7 +15,6 @@ function SignIn(){
 
     const {register, handleSubmit, formState: {errors}} = useForm();
     const {logInFunction, isAuth} = useContext(AuthContext);
-
     const [error, setError] = useState('')
 
     const history = useHistory();
@@ -28,12 +27,10 @@ function SignIn(){
                 username: data.username,
                 password: data.password,
             })
-            console.log(response.data.jwt);
             logInFunction(response.data.jwt)
             history.push('/')
         } catch (e) {
             console.error(e)
-            console.error(e.response.data)
             setError(e.response.data)
         }
     }
@@ -42,7 +39,6 @@ function SignIn(){
             <SmallHeader
                 backgroundImage={backgroundImage} title="pavement texture" height={'100vh'} >
                 <div className="form-container">
-
             <form
                 className="login-form"
                 onSubmit={handleSubmit(onLoginFormSubmit)}>

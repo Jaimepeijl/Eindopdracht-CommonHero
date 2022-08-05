@@ -34,7 +34,6 @@ function button (){
     }
 
     async function createOfferVacancy(data){
-        console.log(data);
         setVacType('offer')
 
         try{
@@ -46,16 +45,8 @@ function button (){
                 description: data.description,
                 repeats: data.repeats,
                 date: data.date,
-            },
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                },
-            });
-            console.log(response.data.id)
+            })
             setVacId(response.data.id)
-            console.log(vacId)
             toggleAddSuccess(true);
 
         } catch (e) {
@@ -63,7 +54,6 @@ function button (){
         }
     }
     async function createSearchVacancy(data){
-        console.log(data);
         setVacType('search')
 
         try{
@@ -75,14 +65,7 @@ function button (){
                 description: data.description,
                 repeats: data.repeats,
                 date: data.date,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    },
-                });
-            console.log(response.data.id)
+                })
             setVacId(response.data.id)
             toggleAddSuccess(true);
 
@@ -98,7 +81,6 @@ function button (){
         } else  {
             setFile2Big('')
         setFile(uploadedFile)
-        console.log(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
         }
     }
@@ -117,7 +99,6 @@ function button (){
                 })
             setIsPending(false)
             setUploaded(true)
-            console.log(result.data)
         } catch (e) {
             console.error(e)
         }

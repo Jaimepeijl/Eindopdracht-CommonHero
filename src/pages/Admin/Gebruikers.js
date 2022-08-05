@@ -21,7 +21,12 @@ function Gebruikers(){
     useEffect(()=>{
         async function fetchUsers(){
             try {
-                const response = await axios.get('http://localhost:8080/gebruikers');
+                const response = await axios.get('http://localhost:8080/gebruikers', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
                 setUsers(response.data);
             } catch (e) {
                 console.error(e)
@@ -49,20 +54,20 @@ function Gebruikers(){
         } adjustAuthority();
     }
     function adjustAuthority(){
-        if(authority === "USER"){
-            setNewAuthority("ADMIN")
+        if(authority === 'USER'){
+            setNewAuthority('ADMIN')
         }
-        else if(authority === "ROLE_USER"){
-            setNewAuthority("ADMIN")
+        else if(authority === 'ROLE_USER'){
+            setNewAuthority('ADMIN')
         }
-        else if (authority === "ROLE_ADMIN"){
-            setNewAuthority("USER")
+        else if (authority === 'ROLE_ADMIN'){
+            setNewAuthority('USER')
         }
         else if (!authority){
-            setNewAuthority("USER")
+            setNewAuthority('USER')
         }
         else {
-            setNewAuthority("USER")
+            setNewAuthority('USER')
         }
     }
     async function toggleAuthorities(){
@@ -167,6 +172,9 @@ return(
          })}
          </tbody>
      </table>
+     </div>}
+     {!isAuth || (user && !user.authority[0].authority) || <div className="gebruikers-page">
+         <h1>Je hebt niet voldoende rechten om deze pagina te bekijken</h1>
      </div>}
      <Footer/>
 

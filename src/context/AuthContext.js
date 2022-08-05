@@ -14,21 +14,31 @@ function AuthContextProvider({children}){
     const history = useHistory();
 
     useEffect(()=>{
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
 
-        if(token  ) { //TODO check of de token nog geldig is
+        if(token) {
             const decodedToken = jwtDecode(token);
-            console.log(decodedToken.sub)
-            async function getUserData(){
+            getUserData(decodedToken.sub, token)
+        } else {
+            toggleAuth({
+                ...auth,
+                isAuth: false,
+                user: null,
+                status: 'done',
+            });
+        }
+    }, []);
+
+            async function getUserData(id, token){
                 try {
-                    const response = await axios.get(`http://localhost:8080/gebruikers/${decodedToken.sub}`, {
+                    const response = await axios.get(`http://localhost:8080/gebruikers/${id}`, {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`,
                         }
                     });
-                    console.log(response.data)
                     toggleAuth({
+                        ...auth,
                         isAuth: true,
                         user: {
                             username:response.data.username,
@@ -38,39 +48,20 @@ function AuthContextProvider({children}){
                         status: 'done'
                     });
                 } catch (e) {
+                    localStorage.clear();
+                    console.error(e);
+
                     toggleAuth({
                         ...auth,
                         status: 'error',
                     });
-                    localStorage.clear();
-                    console.error(e);
                 }
             }
-            getUserData()
-        } else {
-            toggleAuth({
-                ...auth,
-                status: 'done',
-            });
-        }
-
-    }, []);
 
     function logIn(token){
-        console.log(token)
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken)
         localStorage.setItem('token', token)
-
-        toggleAuth({
-            ...auth,
-            isAuth: true,
-            user: {
-                username: decodedToken.sub,
-            },
-            status: 'done',
-        });
-        console.log("Gebruiker is ingelogd!")
+        getUserData(decodedToken.sub, token)
         history.push('/profile')
     }
     function logOut(){
@@ -81,7 +72,6 @@ function AuthContextProvider({children}){
         });
         localStorage.clear();
         history.push('/')
-        console.log("Gebruiker is uitgelogd!")
     }
     const contextData = {
         isAuth: auth.isAuth,
@@ -92,8 +82,8 @@ function AuthContextProvider({children}){
     return (
         <AuthContext.Provider value={contextData}>
             {auth.status === "done" && children}
-            {auth.status === "pending" && <p>Loading...</p>}
-            {auth.status === "error" && <p>Er ging wat mis! Refresh de pagina..</p>}
+            {auth.status === "pending" && <p>Aan het laden...Dit kan niet lang duren!</p>}
+            {auth.status === "error" && <p>Er ging iets mis! Refresh de pagina..</p>}
         </AuthContext.Provider>
     )
 }

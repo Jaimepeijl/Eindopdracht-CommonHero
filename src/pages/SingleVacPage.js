@@ -55,10 +55,8 @@ function SingleVacPage() {
     useEffect(()=> {
         async function getVacancy() {
             try {
-                console.log(id)
                 const response = await axios.get(`http://localhost:8080/vacancies/${vactype}/${id}`
                 )
-                console.log(response.data)
                 setThisVac(response.data);
                 setPublisherName(response.data.name)
                 setTitle(response.data.title)
@@ -153,7 +151,6 @@ function SingleVacPage() {
                 })
             setIsPending(false)
             setUploaded(true)
-            console.log(result.data)
         } catch (e) {
             console.error(e)
         }
