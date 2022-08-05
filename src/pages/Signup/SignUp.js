@@ -21,8 +21,6 @@ function SignUp(){
     const [addSucces, toggleAddSuccess] = useState(false);
 
     async function addUser(data){
-        console.log(data)
-        console.log(name, email, username, city);
         try{
             const response = await axios.post('http://localhost:8080/gebruikers/signup',{
                 username: data.username,
@@ -32,7 +30,6 @@ function SignUp(){
                 city: data.city,
             }
         );
-            console.log(response.data)
             toggleAddSuccess(true);
         } catch (e) {
             console.error(e)

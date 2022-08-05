@@ -12,6 +12,7 @@ import {useHistory} from "react-router-dom";
 
 function MijnVacs(){
     const {isAuth, user} = useContext(AuthContext);
+    const token = localStorage.getItem('token')
     const [vacSearchInfo, setVacSearchInfo] = useState([])
     const [vacOfferInfo, setVacOfferInfo] = useState([])
     const history = useHistory();
@@ -26,7 +27,12 @@ function MijnVacs(){
     useEffect(()=> {
         async function getSearchVacancies() {
             try {
-                const response = await axios.get('http://localhost:8080/vacancies/search')
+                const response = await axios.get('http://localhost:8080/vacancies/search', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
                 const info = response.data
                 UserItems(info, setVacSearchInfo)
             } catch (e) {
@@ -39,7 +45,12 @@ function MijnVacs(){
     useEffect(()=> {
         async function getOfferVacancies() {
             try {
-                const response = await axios.get('http://localhost:8080/vacancies/offer')
+                const response = await axios.get('http://localhost:8080/vacancies/offer', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
                 const info = response.data
                 UserItems(info, setVacOfferInfo)
             } catch (e) {
@@ -58,13 +69,12 @@ function MijnVacs(){
         <div className="mijn-vacature-page">
             <h1>Dit is een overzicht van uw eigen vacatures</h1>
             <h2>Klik op een vacature om deze te verwijderen of te bewerken</h2>
-        <div id="vacatures">
+            {isAuth && <div id="vacatures">
 
             <ul className="hulpAanbod">
                 <h2>Hulp Aangeboden</h2>
                 <section className="vacatures">
                     {vacOfferInfo && vacOfferInfo.map((info)=>{
-                        console.log(vacOfferInfo)
                         return (
                             <div>
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>
@@ -86,7 +96,6 @@ function MijnVacs(){
                 <h2>Hulp Gezocht</h2>
                 <section className="vacatures">
                     {vacSearchInfo && vacSearchInfo.map((info)=>{
-                        console.log(vacSearchInfo)
                         return (
                             <HulpVragenVac vacInfo={info} key={info.title}/>
                         )
@@ -102,7 +111,7 @@ function MijnVacs(){
                         </section>}
                 </section>
             </ul>
-        </div>
+        </div>}
     </div>
     </>
 )
