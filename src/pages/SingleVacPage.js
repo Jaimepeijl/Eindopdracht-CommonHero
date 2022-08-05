@@ -39,6 +39,12 @@ function SingleVacPage() {
     const [isPending, setIsPending] = useState(false);
     const [uploaded, setUploaded] = useState(false)
 
+    const [myVac, toggleMyVac] = useState(false)
+    const handleMyVac = () => {
+        if ((user && user.username === publisherName) || (user && user.authority[0] && user.authority[0].authority === 'ADMIN')) {
+    toggleMyVac(true)
+        }
+    }
     const [wijzigen, setWijzigen] = useState(false);
     const handleWijzigen = () => {
         setWijzigen(true)
@@ -46,10 +52,6 @@ function SingleVacPage() {
     const handlePhotoButton = () => {
         togglePhotoButton(true)
     };
-    console.log(formatDate)
-    console.log(vactype)
-    console.log(id)
-
     useEffect(()=> {
         async function getVacancy() {
             try {
@@ -58,6 +60,7 @@ function SingleVacPage() {
                 )
                 console.log(response.data)
                 setThisVac(response.data);
+                setPublisherName(response.data.name)
                 setTitle(response.data.title)
                 setHours(response.data.hours)
                 setCity(response.data.city)
@@ -69,8 +72,8 @@ function SingleVacPage() {
             }
         }
         getVacancy();
+        handleMyVac();
     }, [id]);
-
     function reageren(){
         setRespond(true)
         getUser()
@@ -86,7 +89,6 @@ function SingleVacPage() {
             } catch (e) {
                 console.error(e)
             }}}
-
     async function deleteVacancy() {
         try {
             const response = await axios.delete(`http://localhost:8080/vacancies/${vactype}/${id}`, {
@@ -100,7 +102,6 @@ function SingleVacPage() {
             console.error(e)
         }
     }
-
     async function updateVacancy(e) {
         e.preventDefault();
         console.log(publisherName, title, hours, city, description, repeats, vacDate)
@@ -126,7 +127,6 @@ function SingleVacPage() {
             console.error(e)
         }
     }
-
     function handleImageChange(e){
         const uploadedFile = e.target.files[0];
         if(uploadedFile.size > 1048576){
@@ -174,7 +174,7 @@ function SingleVacPage() {
                     <p>{thisVac.description}</p>
                     {user &&
                     <div>
-                    {user.username === thisVac.publisher ?
+                    {myVac ?
                         <div className="gebruikers-page-form-container">
                             <h3>Dit is uw eigen vacature. U kunt hierop niet reageren maar wel:</h3>
                             <section className="button-container">
@@ -234,6 +234,7 @@ function SingleVacPage() {
                                     >
                                         Afbeelding opslaan
                                     </button>}
+                                    {isPending && <p>Aan het laden!</p>}
                                     {uploaded && <h2>De foto is toegevoegd!</h2>}
                                 </div>}
                         </section>

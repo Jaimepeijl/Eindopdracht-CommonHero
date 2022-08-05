@@ -8,7 +8,7 @@ import {AuthContext} from "../../context/AuthContext";
 
 function Gebruikers(){
     const token = localStorage.getItem('token');
-    const {isAuth} = useContext(AuthContext);
+    const {isAuth, user} = useContext(AuthContext);
 
     const [users, setUsers] = useState([]);
     const [username, setUsername] = useState('');
@@ -23,7 +23,6 @@ function Gebruikers(){
             try {
                 const response = await axios.get('http://localhost:8080/gebruikers');
                 setUsers(response.data);
-                console.log(response.data)
             } catch (e) {
                 console.error(e)
             }
@@ -33,9 +32,7 @@ function Gebruikers(){
 
     async function getAuthorities(e){
         toggleButton(true)
-        console.log(authority)
         e.preventDefault();
-        console.log(username)
         try {
             const response = await axios.get(`http://localhost:8080/gebruikers/${username}/authorities`,
         {
@@ -44,13 +41,9 @@ function Gebruikers(){
                     Authorization: `Bearer ${token}`
             },
         });
-            console.log(response.data)
             setUserInfo(response.data)
-            console.log(userInfo[0].authority)
             setInputUsername(response.data[0].username)
-            console.log(username)
             setAuthority(userInfo[0].authority);
-            console.log(authority)
         } catch (e) {
             console.error(e)
         } adjustAuthority();
@@ -73,9 +66,6 @@ function Gebruikers(){
         }
     }
     async function toggleAuthorities(){
-        console.log(authority)
-        console.log(username)
-        console.log(newAuthority)
         try {
             const response = await axios.post(`http://localhost:8080/gebruikers/${username}/authorities/${newAuthority}`,
                 {
@@ -84,14 +74,11 @@ function Gebruikers(){
                         Authorization: `Bearer ${token}`
                     },
                 });
-            console.log(response)
         } catch (e) {
             console.error(e)
         }
     }
     async function deleteAuthority(){
-        console.log(authority)
-        console.log(newAuthority)
         try {
             const response = await axios.delete(`http://localhost:8080/gebruikers/${username}/authorities/${authority}`,
                 {
@@ -100,7 +87,6 @@ function Gebruikers(){
                         Authorization: `Bearer ${token}`
                     },
                 })
-            console.log(response)
         } catch (e) {
             console.error(e)
         }
@@ -109,7 +95,7 @@ return(
  <>
      <SmallHeader backgroundImage={backgroundImage} title="Do Something Great" height={'80vh'}>
      </SmallHeader>
-     {isAuth &&
+     {isAuth && user.authority[0].authority &&
      <div className="gebruikers-page">
          <h1>De Admin Gebruikerspagina</h1>
          <section>

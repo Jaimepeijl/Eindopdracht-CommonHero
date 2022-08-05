@@ -16,6 +16,8 @@ function SignIn(){
     const {register, handleSubmit, formState: {errors}} = useForm();
     const {logInFunction, isAuth} = useContext(AuthContext);
 
+    const [error, setError] = useState('')
+
     const history = useHistory();
 
     const isValid = username !== '' && password !== '';
@@ -31,6 +33,8 @@ function SignIn(){
             history.push('/')
         } catch (e) {
             console.error(e)
+            console.error(e.response.data)
+            setError(e.response.data)
         }
     }
     return(
@@ -64,6 +68,7 @@ function SignIn(){
                         required
                         onChange={(e) => setPassword(e.target.value)}/>
                 </label>
+                {error && <p className="error-message">{error}</p>}
                 <button
                     type="submit"
                     className="submit-button"

@@ -12,24 +12,40 @@ import Footer from "../components/Footer/Footer";
 function HulpAanbieden() {
     const {isAuth} = useContext(AuthContext);
     const history = useHistory();
-    const [vacInfo, setVacInfo] = useState([])
+    const [vacInfo, setVacInfo] = useState([]);
 
-    const [searchInput, setSearchInput] = useState('')
-    const [filteredResults, setFilteredResults] = useState([])
+    const [searchInput, setSearchInput] = useState('');
+    const [filteredResults, setFilteredResults] = useState([]);
+    const [city, setCity] = useState('');
 
-    const searchItems = (searchValue) => {
-        setSearchInput(searchValue)
-        if(searchInput !== ''){
+    const [sorted, toggleSorted] = useState(false);
+    const [dateSort, setDateSort] = useState("Laag naar hoog");
+    const [hourSort, setHourSort] = useState("Laag naar hoog");
+
+    useEffect(()=>{
+        console.log(searchInput, city)
+        if(searchInput !== '' && city === ''){
+            console.log("nu is die bij searchInput")
+            console.log(searchInput)
             const filteredVacInfo = vacInfo.filter((info) => {
                 return Object.values(info).join('').toLowerCase().includes(searchInput.toLowerCase())
-                console.log(filteredVacInfo)
         })
         setFilteredResults(filteredVacInfo)
-        }
-        else{
+        } else if (searchInput === '' && city !== '') {
+            console.log("nu is die bij city")
+            console.log(city)
+            const filteredVacInfo = vacInfo.filter((info) => {
+                return Object.values(info.city).join('').toLowerCase().includes(city.toLowerCase())
+            })
+            setFilteredResults(filteredVacInfo)
+        } else {
+            console.log("nu is die nergens")
             setFilteredResults(vacInfo)
+            setCity('')
+            setSearchInput('')
+            localStorage.clear()
         }
-    }
+    }, [city, searchInput]);
 
     useEffect(()=> {
         async function getVacancies() {
@@ -44,6 +60,49 @@ function HulpAanbieden() {
         getVacancies();
     }, []);
 
+    const sortByHours = () => {
+        toggleSorted(true)
+        let sortedVacInfo = vacInfo
+        if  (city.length >  1 || searchInput.length >  1) {
+            sortedVacInfo = filteredResults
+        }
+        if (hourSort === "Laag naar hoog") {
+            setFilteredResults(
+                sortedVacInfo.slice().sort((a,b) =>{
+                    return b.hours - a.hours;
+                })
+            );
+            setHourSort("Hoog naar laag")
+        }
+        if (hourSort === "Hoog naar laag") {
+            setFilteredResults(
+                sortedVacInfo.slice().sort((a,b) =>{
+                    return a.hours - b.hours;
+                })
+            );
+            setHourSort("Laag naar hoog")
+        }
+    };
+
+    const sortByDate = () => {
+        toggleSorted(true)
+        if (dateSort === "Laag naar hoog") {
+            setFilteredResults(
+                filteredResults.slice().sort((a,b) =>{
+                    return new Date(b.date) - new Date(a.date);
+                })
+            );
+            setDateSort("Hoog naar laag")
+        }
+        if (dateSort === "Hoog naar laag") {
+            setFilteredResults(
+                filteredResults.slice().sort((a,b) =>{
+                    return new Date(a.date) - new Date(b.date);
+                })
+            );
+            setDateSort("Laag naar hoog")
+        }
+    };
     return(
         <>
             <SmallHeader
@@ -75,20 +134,44 @@ function HulpAanbieden() {
             <section className="vacature-section">
                 <form className="search">
                     <h2>Wat zoek je precies?</h2>
+                    <h3>Zoeken</h3>
                     <input type='search'
                            placeholder='Ik zoek...'
-                           onChange={(e)=> searchItems(e.target.value)}
+                           onChange={(e)=> setSearchInput(e.target.value)}
                            />
+                    <h3>Zoek op stad</h3>
+                    <input type='search'
+                           placeholder='Bijv, Waddinxveen'
+                           onChange={(e)=> setCity(e.target.value)}
+                    />
+                    <div className="sort">
+                        <h3>Sorteren op aantal uur</h3>
+                        <label htmlFor="hourSort" className="sort-button">
+                            {hourSort}
+                            <input type="checkbox"
+                                   value={hourSort}
+                                   name="hourSort"
+                                   onClick={() => sortByHours()}/>
+                        </label>
+                        <h3>Sorteren op datum</h3>
+                        <label htmlFor="dateSort" className="sort-button">
+                            {dateSort}
+                            <input type="checkbox"
+                                   value={dateSort}
+                                   name="dateSort"
+                                   onClick={() => sortByDate()}/>
+                        </label>
+                    </div>
                 </form>
 
                 <section className="vacatures">
-                    {searchInput.length > 1 ? (
+                    {city.length >  1 || searchInput.length >  1 || sorted ? (
                         filteredResults.map((info) => {
                             return (
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>
                             )
                         })
-                    ) : (
+                        ) : (
                         vacInfo.map((info) => {
                             return (
                                 <HulpAanbiedenVac vacInfo={info} key={info.title}/>

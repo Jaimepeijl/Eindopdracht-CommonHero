@@ -29,26 +29,42 @@ a:visited, a:hover {
     color: red;
     text-decoration: none;
 }
-
+.error-message{
+    color: red;
+}
 .vacature-container, .vacature-section{
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(230,200,191,1) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(216,75,30,0.28895308123249297) 100%);
 }
 .vacature-section{
     padding: 20px;
     display: flex;
 }
 .search{
-    width: 30vw;
-    height: 30vh;
+    width: 40vw;
+    height: 50vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     text-align: start;
     border: 1px black solid;
     margin: 16px;
     padding: 16px;
-
+    background-color: white;
+}
+.sort {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #D84B1E;
+    padding: 10px;
+}
+.sort-button{
+    display: flex;
+    justify-content: space-between;
+}
+.sort-button input{
+    max-width: 15px;
+    max-height: 15px;
 }
 .hulpForm p{
     color: white;

@@ -27,7 +27,6 @@ function Profile(){
     const [wijzigen, setWijzigen] = useState(false);
     const handleWijzigen = () => {
         setWijzigen(true)
-        console.log(wijzigen)
     };
 
     const [newEmail, setNewEmail]  = useState({email});
@@ -36,7 +35,6 @@ function Profile(){
 
     useEffect(()=>{
         async function getProfileData(){
-            console.log(isAuth, user.username)
             const token = localStorage.getItem('token')
             try {
                 const result = await axios.get(`http://localhost:8080/gebruikers/${user.username}`, {
@@ -45,7 +43,6 @@ function Profile(){
                         Authorization: `Bearer ${token}`,
                     }
                     });
-                console.log(result.data)
                 setProfilePic(result.data.file)
                 setUsername(result.data.username)
                 setEmail(result.data.email)
@@ -61,13 +58,11 @@ function Profile(){
     function handleImageChange(e){
         const uploadedFile = e.target.files[0];
         setFile(uploadedFile)
-        console.log(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
     }
 
     async function sendImage(e){
         setIsPending(true)
-        // e.preventDefault();
         const formData = new FormData();
         formData.append("file", file);
         
@@ -87,7 +82,6 @@ function Profile(){
     }
 
     async function updateProfile(){
-        console.log(newName, newEmail, username, newCity);
         try {
             const result = await axios.put(`http://localhost:8080/gebruikers/${user.username}`, {
                 username: username,
@@ -100,7 +94,6 @@ function Profile(){
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(result.data)
         } catch (e) {
             console.error(e)
         }}
@@ -122,7 +115,6 @@ function Profile(){
                         Inloggen
                     </button>
                 </section>}
-
                 {isAuth &&
                     <div className="login-form">
                     <form onSubmit={sendImage}>
@@ -149,17 +141,13 @@ function Profile(){
                         {!isPending && <button type="submit">Uploaden</button>}
                         {isPending && <h3>Aan het laden!</h3>}
                     </form>
-
                         <h4>Kloppen deze gegevens nog?</h4>
                         {!wijzigen &&
                             <section className="credentials">
-
                             <ul>
                         <li><h3>Naam en achternaam: </h3> {name}</li>
                         <li><h3>Email: </h3>{email}</li>
                         <li><h3>Woonplaats: </h3> {city}</li>
-
-
                         </ul>
                                 <button
                                 type="button"
@@ -207,7 +195,6 @@ function Profile(){
                                     Opslaan
                                 </button>
                                 </form>
-
                             </section>}
                         <h4>Uw vacatures inzien, bewerken of verwijderen?</h4>
                         <button
@@ -216,7 +203,6 @@ function Profile(){
                         onClick={() => history.push('/mijnvacs')}>
                         Naar uw vacature overzicht
                     </button>
-
                     </div>
                 }
         </div>

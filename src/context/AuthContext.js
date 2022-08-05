@@ -33,6 +33,7 @@ function AuthContextProvider({children}){
                         user: {
                             username:response.data.username,
                             email:response.data.email,
+                            authority: response.data.authorities,
                         },
                         status: 'done'
                     });
